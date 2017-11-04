@@ -17,7 +17,6 @@
 package main
 
 import (
-	
 	"image/color"
 	"log"
 
@@ -30,31 +29,30 @@ const (
 	screenHeight = 480
 )
 
-var count = 0
-
-func update(screen *ebiten.Image) error {
-	count++
-	count %= 240
-
-	if ebiten.IsRunningSlowly() {
-		return nil
-	}
-	var coordinates Coordinates 
-
-	coordinates.x = 1
-	coordinates.y = 1
-	box(screen, coordinates)
-	
-	return nil
-}
-
 type Coordinates struct {
 	x int
 	y int
 }
 
+func update(screen *ebiten.Image) error {
+	if ebiten.IsRunningSlowly() {
+		return nil
+	}
 
-func box(screen *ebiten.Image, coordinates Coordinates){
+	c := newCoordinates(1,1)
+	drawBox(screen, c)
+	
+	return nil
+}
+
+func newCoordinates(x int, y int) Coordinates {
+	return Coordinates{
+		x:x,
+		y:y,	
+	}
+}
+
+func drawBox(screen *ebiten.Image, coordinates Coordinates){
 	ebitenutil.DrawRect(screen, float64(50*coordinates.x), float64(50*coordinates.y), 100, 100, color.RGBA{0x80, 0x80, 0x80, 0x80})
 }
 
