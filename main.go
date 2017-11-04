@@ -17,7 +17,7 @@
 package main
 
 import (
-	"fmt"
+	
 	"image/color"
 	"log"
 
@@ -39,16 +39,23 @@ func update(screen *ebiten.Image) error {
 	if ebiten.IsRunningSlowly() {
 		return nil
 	}
+	var coordinates Coordinates 
 
-	cf := float64(count)
-	ebitenutil.DrawLine(screen, 100, 100, 300, 100, color.RGBA{0xff, 0, 0xff, 0xff})
-	ebitenutil.DrawLine(screen, 50, 150, 50, 350, color.RGBA{0xff, 0xff, 0, 0xff})
-	ebitenutil.DrawLine(screen, 50, 100+cf, 200+cf, 250, color.RGBA{0x00, 0xff, 0xff, 0xff})
-	ebitenutil.DrawRect(screen, 50+cf, 50+cf, 100+cf, 100+cf, color.RGBA{0x80, 0x80, 0x80, 0x80})
-	ebitenutil.DrawRect(screen, 300-cf, 50, 120, 120, color.RGBA{0x00, 0x80, 0x00, 0x80})
-
-	ebitenutil.DebugPrint(screen, fmt.Sprintf("FPS: %0.2f", ebiten.CurrentFPS()))
+	coordinates.x = 1
+	coordinates.y = 1
+	box(screen, coordinates)
+	
 	return nil
+}
+
+type Coordinates struct {
+	x int
+	y int
+}
+
+
+func box(screen *ebiten.Image, coordinates Coordinates){
+	ebitenutil.DrawRect(screen, float64(50*coordinates.x), float64(50*coordinates.y), 100, 100, color.RGBA{0x80, 0x80, 0x80, 0x80})
 }
 
 func main() {
