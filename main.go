@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// +build example
-
 package main
 
 import (
@@ -34,30 +32,74 @@ type Coordinates struct {
 	y int
 }
 
+const regularGameDimensionX = 3
+const regularGameDimensionY = 3
+
+type Matrix struct {
+	dimensionx int
+	dimensiony int
+	fields     [][]int
+}
+
+var matrix Matrix = newMatrix(regularGameDimensionX, regularGameDimensionY)
+
 func update(screen *ebiten.Image) error {
 	if ebiten.IsRunningSlowly() {
 		return nil
 	}
 
-	c := newCoordinates(1,1)
-	drawBox(screen, c)
-	
+	drawMatrix(screen, matrix)
+
 	return nil
+}
+
+func drawMatrix(screen *ebiten.Image, matrix Matrix) {
+	var x int = 1
+	var y int = 1
+
+	for i:=1;i<regularGameDimensionX;i = i + 1 {
+		x = i
+		for j:=1;j<regularGameDimensionY;j = j +1 {
+			y = j
+			c := newCoordinates(x, y) 	
+			drawBox(screen, c)
+		}
+	
+	}
+	
 }
 
 func newCoordinates(x int, y int) Coordinates {
 	return Coordinates{
-		x:x,
-		y:y,	
+		x: x,
+		y: y,
 	}
 }
 
-func drawBox(screen *ebiten.Image, coordinates Coordinates){
-	ebitenutil.DrawRect(screen, float64(50*coordinates.x), float64(50*coordinates.y), 100, 100, color.RGBA{0x80, 0x80, 0x80, 0x80})
+func newMatrix(dimensionx int, dimensiony int) Matrix {
+	var m Matrix
+	m.dimensionx = dimensionx
+	m.dimensiony = dimensiony
+	//init fields
+	m.fields = make([][]int, dimensionx)
+	for i := 0; i < dimensionx; i = i + 1 {
+		m.fields[i] = make([]int, dimensiony)
+	}
+
+	return m
+}
+
+func drawBox(screen *ebiten.Image, coordinates Coordinates) {
+	ebitenutil.DrawRect(screen, 
+		50, 
+		50, 
+		float64(50*coordinates.x), 
+		float64(50*coordinates.y),  
+		color.RGBA{0x80, 0x80, 0x80, 0x80})
 }
 
 func main() {
-	if err := ebiten.Run(update, screenWidth, screenHeight, 1, "Shapes (Ebiten Demo)"); err != nil {
+	if err := ebiten.Run(update, screenWidth, screenHeight, 1, "TripsTrapsTrull Shapes (Ebiten Demo)"); err != nil {
 		log.Fatal(err)
 	}
 }
