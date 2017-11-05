@@ -7,3 +7,6 @@ fmt:
 
 run:
 	go run *.go
+
+lint:
+	gometalinter .
