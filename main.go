@@ -30,7 +30,7 @@ const (
 const regularGameDimensionX = 3
 const regularGameDimensionY = 3
 
-var matrix *Matrix = NewMatrix(regularGameDimensionX, regularGameDimensionY)
+var matrix = NewMatrix(regularGameDimensionX, regularGameDimensionY)
 
 func update(screen *ebiten.Image) error {
 	if ebiten.IsRunningSlowly() {
@@ -43,14 +43,9 @@ func update(screen *ebiten.Image) error {
 }
 
 func drawMatrix(screen *ebiten.Image, matrix *Matrix) {
-	var x int = 1
-	var y int = 1
-
 	for i := 1; i < regularGameDimensionX; i = i + 1 {
-		x = i
 		for j := 1; j < regularGameDimensionY; j = j + 1 {
-			y = j
-			c := NewCoordinates(x, y)
+			c := NewCoordinates(i, j)
 			drawBox(screen, c)
 		}
 

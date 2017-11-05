@@ -1,11 +1,13 @@
 package main
 
+// Matrix represents a matrix on screen
 type Matrix struct {
 	dimensionx int
 	dimensiony int
 	fields     [][]int
 }
 
+// NewMatrix returns instance
 func NewMatrix(dimensionx int, dimensiony int) *Matrix {
 	var m Matrix
 	m.dimensionx = dimensionx
