@@ -50,6 +50,9 @@ func drawMatrix(screen *ebiten.Image, matrix *Matrix) {
 		}
 
 	}
+	start := NewCoordinates(0, 0)
+	end := NewCoordinates(50, 50)
+	drawCross(screen, start, end)
 
 }
 
@@ -59,7 +62,17 @@ func drawBox(screen *ebiten.Image, coordinates *Coordinates) {
 		50,
 		float64(50*coordinates.x),
 		float64(50*coordinates.y),
-		color.RGBA{0x80, 0x80, 0x80, 0x80})
+		gray)
+}
+
+var gray = color.RGBA{0x80, 0x80, 0x80, 0x80}
+var red = color.RGBA{0x80, 0x0, 0x0, 0x80}
+
+func drawCross(screen *ebiten.Image, start *Coordinates, end *Coordinates) {
+	ebitenutil.DrawLine(screen, float64(start.x), float64(start.y),
+		float64(end.x), float64(end.y), red)
+	ebitenutil.DrawLine(screen, float64(end.x), float64(start.y),
+		float64(start.x), float64(end.y), red)
 }
 
 func main() {
