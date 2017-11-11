@@ -42,37 +42,61 @@ func update(screen *ebiten.Image) error {
 	return nil
 }
 
+const boxSize = 150
+
 func drawMatrix(screen *ebiten.Image, matrix *Matrix) {
-	for i := 1; i < regularGameDimensionX; i = i + 1 {
-		for j := 1; j < regularGameDimensionY; j = j + 1 {
-			c := NewCoordinates(i, j)
-			drawBox(screen, c)
+	for i := 0; i < regularGameDimensionX; i = i + 1 {
+		for j := 0; j < regularGameDimensionY; j = j + 1 {
+			drawBox(screen, NewCoordinates(i*boxSize, j*boxSize))
 		}
 
 	}
-	start := NewCoordinates(0, 0)
-	end := NewCoordinates(50, 50)
-	drawCross(screen, start, end)
+	drawCross(screen, NewCoordinates(0, 0))
 
 }
 
 func drawBox(screen *ebiten.Image, coordinates *Coordinates) {
-	ebitenutil.DrawRect(screen,
-		50,
-		50,
-		float64(50*coordinates.x),
-		float64(50*coordinates.y),
+	// draw up horizontal
+	ebitenutil.DrawLine(screen,
+		float64(coordinates.x),
+		float64(coordinates.y),
+		float64(coordinates.x+boxSize),
+		float64(coordinates.y),
+		gray)
+
+	// draw right vertical
+	ebitenutil.DrawLine(screen,
+		float64(coordinates.x+boxSize),
+		float64(coordinates.y),
+		float64(coordinates.x+boxSize),
+		float64(coordinates.y+boxSize),
+		gray)
+
+	// draw left vertical
+	ebitenutil.DrawLine(screen,
+		float64(coordinates.x),
+		float64(coordinates.y),
+		float64(coordinates.x),
+		float64(coordinates.y+boxSize),
+		gray)
+
+	// draw down horizontal
+	ebitenutil.DrawLine(screen,
+		float64(coordinates.x),
+		float64(coordinates.y+boxSize),
+		float64(coordinates.x+boxSize),
+		float64(coordinates.y+boxSize),
 		gray)
 }
 
 var gray = color.RGBA{0x80, 0x80, 0x80, 0x80}
 var red = color.RGBA{0x80, 0x0, 0x0, 0x80}
 
-func drawCross(screen *ebiten.Image, start *Coordinates, end *Coordinates) {
-	ebitenutil.DrawLine(screen, float64(start.x), float64(start.y),
-		float64(end.x), float64(end.y), red)
-	ebitenutil.DrawLine(screen, float64(end.x), float64(start.y),
-		float64(start.x), float64(end.y), red)
+func drawCross(screen *ebiten.Image, coordinates *Coordinates) {
+	ebitenutil.DrawLine(screen, float64(coordinates.x), float64(coordinates.y),
+		float64(boxSize), float64(boxSize), red)
+	ebitenutil.DrawLine(screen, float64(boxSize), float64(coordinates.y),
+		float64(coordinates.x), float64(boxSize), red)
 }
 
 func main() {
