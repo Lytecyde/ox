@@ -17,6 +17,7 @@ package main
 import (
 	"image/color"
 	"log"
+	"time"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
@@ -25,44 +26,93 @@ import (
 const (
 	screenWidth  = 640
 	screenHeight = 480
+
+	regularGameDimensionX = 3
+	regularGameDimensionY = 3
+
+	boxSize = 150
 )
 
-const regularGameDimensionX = 3
-const regularGameDimensionY = 3
+var (
+	matrix = NewMatrix(regularGameDimensionX, regularGameDimensionY)
 
-var matrix = NewMatrix(regularGameDimensionX, regularGameDimensionY)
+	cursor = NewCoordinates(0, 0)
+
+	gray  = color.RGBA{0x80, 0x80, 0x80, 0x80}
+	red   = color.RGBA{0x80, 0x0, 0x0, 0x80}
+	green = color.RGBA{0x0, 0x80, 0x0, 0x80}
+
+	keyAt = time.Time{}
+)
+
+func moveCursor(coordinates *Coordinates) {
+	if time.Now().Sub(keyAt).Seconds() < 0.5 {
+		return
+	}
+
+	if coordinates.x < 0 {
+		return
+	}
+
+	if coordinates.x >= regularGameDimensionX*boxSize {
+		return
+	}
+
+	if coordinates.y < 0 {
+		return
+	}
+
+	if coordinates.y >= regularGameDimensionY*boxSize {
+		return
+	}
+
+	cursor = coordinates
+
+	keyAt = time.Now()
+}
 
 func update(screen *ebiten.Image) error {
 	if ebiten.IsRunningSlowly() {
 		return nil
 	}
 
-	drawMatrix(screen, matrix)
+	drawMatrix(screen, matrix, gray)
+
+	drawBox(screen, cursor, red)
+
+	if ebiten.IsKeyPressed(ebiten.KeyUp) {
+		moveCursor(NewCoordinates(cursor.x, cursor.y-boxSize))
+
+	} else if ebiten.IsKeyPressed(ebiten.KeyDown) {
+		moveCursor(NewCoordinates(cursor.x, cursor.y+boxSize))
+
+	} else if ebiten.IsKeyPressed(ebiten.KeyLeft) {
+		moveCursor(NewCoordinates(cursor.x-boxSize, cursor.y))
+
+	} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
+		moveCursor(NewCoordinates(cursor.x+boxSize, cursor.y))
+	}
 
 	return nil
 }
 
-const boxSize = 150
-
-func drawMatrix(screen *ebiten.Image, matrix *Matrix) {
+func drawMatrix(screen *ebiten.Image, matrix *Matrix, clr color.Color) {
 	for i := 0; i < regularGameDimensionX; i = i + 1 {
 		for j := 0; j < regularGameDimensionY; j = j + 1 {
-			drawBox(screen, NewCoordinates(i*boxSize, j*boxSize))
+			drawBox(screen, NewCoordinates(i*boxSize, j*boxSize), clr)
 		}
 
 	}
-	drawCross(screen, NewCoordinates(0, 0))
-
 }
 
-func drawBox(screen *ebiten.Image, coordinates *Coordinates) {
+func drawBox(screen *ebiten.Image, coordinates *Coordinates, clr color.Color) {
 	// draw up horizontal
 	ebitenutil.DrawLine(screen,
 		float64(coordinates.x),
 		float64(coordinates.y),
 		float64(coordinates.x+boxSize),
 		float64(coordinates.y),
-		gray)
+		clr)
 
 	// draw right vertical
 	ebitenutil.DrawLine(screen,
@@ -70,7 +120,7 @@ func drawBox(screen *ebiten.Image, coordinates *Coordinates) {
 		float64(coordinates.y),
 		float64(coordinates.x+boxSize),
 		float64(coordinates.y+boxSize),
-		gray)
+		clr)
 
 	// draw left vertical
 	ebitenutil.DrawLine(screen,
@@ -78,7 +128,7 @@ func drawBox(screen *ebiten.Image, coordinates *Coordinates) {
 		float64(coordinates.y),
 		float64(coordinates.x),
 		float64(coordinates.y+boxSize),
-		gray)
+		clr)
 
 	// draw down horizontal
 	ebitenutil.DrawLine(screen,
@@ -86,17 +136,14 @@ func drawBox(screen *ebiten.Image, coordinates *Coordinates) {
 		float64(coordinates.y+boxSize),
 		float64(coordinates.x+boxSize),
 		float64(coordinates.y+boxSize),
-		gray)
+		clr)
 }
 
-var gray = color.RGBA{0x80, 0x80, 0x80, 0x80}
-var red = color.RGBA{0x80, 0x0, 0x0, 0x80}
-
-func drawCross(screen *ebiten.Image, coordinates *Coordinates) {
+func drawCross(screen *ebiten.Image, coordinates *Coordinates, clr color.Color) {
 	ebitenutil.DrawLine(screen, float64(coordinates.x), float64(coordinates.y),
-		float64(boxSize), float64(boxSize), red)
+		float64(boxSize), float64(boxSize), clr)
 	ebitenutil.DrawLine(screen, float64(boxSize), float64(coordinates.y),
-		float64(coordinates.x), float64(boxSize), red)
+		float64(coordinates.x), float64(boxSize), clr)
 }
 
 func main() {
