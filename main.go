@@ -46,7 +46,7 @@ var (
 )
 
 func moveCursor(coordinates *Coordinates) {
-	if time.Now().Sub(keyAt).Seconds() < 0.5 {
+	if time.Now().Sub(keyAt).Seconds() < 0.2 {
 		return
 	}
 
