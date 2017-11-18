@@ -43,9 +43,9 @@ func update(screen *ebiten.Image) error {
 		return nil
 	}
 
-	drawMatrix(screen, gameState.matrix, gray)
+	gameState.drawMatrix(screen)
 
-	drawBox(screen, NewCoordinates(gameState.cursor.x*boxSize, gameState.cursor.y*boxSize), red)
+	gameState.drawCursor(screen)
 
 	if ebiten.IsKeyPressed(ebiten.KeyUp) {
 		gameState.moveCursorUp()

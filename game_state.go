@@ -2,6 +2,8 @@ package main
 
 import (
 	"time"
+
+	"github.com/hajimehoshi/ebiten"
 )
 
 // GameState represents game state
@@ -59,4 +61,12 @@ func (gameState *GameState) moveCursorLeft() {
 
 func (gameState *GameState) moveCursorRight() {
 	gameState.moveCursor(NewCoordinates(gameState.cursor.x+1, gameState.cursor.y))
+}
+
+func (gameState GameState) drawMatrix(screen *ebiten.Image) {
+	drawMatrix(screen, gameState.matrix, gray)
+}
+
+func (gameState GameState) drawCursor(screen *ebiten.Image) {
+	drawBox(screen, NewCoordinates(gameState.cursor.x*boxSize, gameState.cursor.y*boxSize), red)
 }
