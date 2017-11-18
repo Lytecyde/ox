@@ -16,7 +16,7 @@ type GameState struct {
 // NewGameState returns new instance
 func NewGameState(gameDimensionX, gameDimensionY int) *GameState {
 	return &GameState{
-		matrix: NewMatrix(regularGameDimensionX, regularGameDimensionY),
+		matrix: NewMatrix(gameDimensionX, gameDimensionY),
 		cursor: NewCoordinates(0, 0),
 	}
 }
