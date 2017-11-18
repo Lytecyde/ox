@@ -21,15 +21,20 @@ func Test_NewGameState_SetsMatrixSizeFromParameters(t *testing.T) {
 	}
 }
 
-/*
 func Test_moveCursor_MovesCursorToGivenCoordinates(t *testing.T) {
 	// Arrange
 	gameState := NewGameState(100, 100)
-	coordinates := NewCoordinates(x, y)
+	coordinates := NewCoordinates(2, 2)
 
 	// Act
 	gameState.moveCursor(coordinates)
 
 	// Assert
+	if gameState.cursor.x != coordinates.x {
+		t.Fatal("invalid x")
+	}
+
+	if gameState.cursor.y != coordinates.y {
+		t.Fatal("invalid y")
+	}
 }
-*/
