@@ -13,11 +13,11 @@ func Test_NewGameState_SetsMatrixSizeFromParameters(t *testing.T) {
 	gameState := NewGameState(x, y)
 
 	// Assert
-	if gameState.matrix.dimensionx != x {
+	if gameState.matrix.x != x {
 		t.Fatal("invalid x")
 	}
 
-	if gameState.matrix.dimensiony != y {
+	if gameState.matrix.y != y {
 		t.Fatal("invalid y")
 	}
 }
@@ -87,7 +87,7 @@ func Test_moveCursor_DoesNotMoveCursor_InCaseOfOffScreenY(t *testing.T) {
 	gameState.moveCursor(coordinates)
 
 	// Assert
-	if gameState.cursor.Equal(coordinates) {
+	if gameState.cursor.Equal(*coordinates) {
 		t.Fatal("invalid coordinates")
 	}
 }
@@ -103,7 +103,7 @@ func Test_moveCursor_InCaseOfTimeIsWithinHumanPerceptionLimit(t *testing.T) {
 	gameState.moveCursor(coordinates)
 
 	// Assert
-	if !gameState.cursor.Equal(coordinates) {
+	if !gameState.cursor.Equal(*coordinates) {
 		t.Fatal("invalid coordinates")
 	}
 }
@@ -119,7 +119,7 @@ func Test_moveCursor_InCaseOfTimeIsOutOfHumanPerceptionLimit(t *testing.T) {
 	gameState.moveCursor(coordinates)
 
 	// Assert
-	if gameState.cursor.Equal(coordinates) {
+	if gameState.cursor.Equal(*coordinates) {
 		t.Fatal("invalid coordinates")
 	}
 }
