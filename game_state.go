@@ -4,12 +4,14 @@ import (
 	"time"
 )
 
+// GameState represents game state
 type GameState struct {
 	matrix *Matrix
 	cursor *Coordinates
 	keyAt  time.Time
 }
 
+// NewGameState returns new instance
 func NewGameState(gameDimensionX, gameDimensionY int) *GameState {
 	return &GameState{
 		matrix: NewMatrix(regularGameDimensionX, regularGameDimensionY),
