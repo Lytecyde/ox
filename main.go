@@ -16,7 +16,6 @@ package main
 
 import (
 	"log"
-	"time"
 
 	"github.com/hajimehoshi/ebiten"
 )
@@ -32,32 +31,6 @@ const (
 )
 
 var gameState = NewGameState(regularGameDimensionX, regularGameDimensionY)
-
-func moveCursor(coordinates *Coordinates) {
-	if time.Now().Sub(gameState.keyAt).Seconds() < 0.2 {
-		return
-	}
-
-	if coordinates.x < 0 {
-		return
-	}
-
-	if coordinates.x >= regularGameDimensionX {
-		return
-	}
-
-	if coordinates.y < 0 {
-		return
-	}
-
-	if coordinates.y >= regularGameDimensionY {
-		return
-	}
-
-	gameState.cursor = coordinates
-
-	gameState.keyAt = time.Now()
-}
 
 func chooseBox() {
 	// check if box is not taken yet in matrix
@@ -75,16 +48,16 @@ func update(screen *ebiten.Image) error {
 	drawBox(screen, NewCoordinates(gameState.cursor.x*boxSize, gameState.cursor.y*boxSize), red)
 
 	if ebiten.IsKeyPressed(ebiten.KeyUp) {
-		moveCursor(NewCoordinates(gameState.cursor.x, gameState.cursor.y-1))
+		gameState.moveCursor(NewCoordinates(gameState.cursor.x, gameState.cursor.y-1))
 
 	} else if ebiten.IsKeyPressed(ebiten.KeyDown) {
-		moveCursor(NewCoordinates(gameState.cursor.x, gameState.cursor.y+1))
+		gameState.moveCursor(NewCoordinates(gameState.cursor.x, gameState.cursor.y+1))
 
 	} else if ebiten.IsKeyPressed(ebiten.KeyLeft) {
-		moveCursor(NewCoordinates(gameState.cursor.x-1, gameState.cursor.y))
+		gameState.moveCursor(NewCoordinates(gameState.cursor.x-1, gameState.cursor.y))
 
 	} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
-		moveCursor(NewCoordinates(gameState.cursor.x+1, gameState.cursor.y))
+		gameState.moveCursor(NewCoordinates(gameState.cursor.x+1, gameState.cursor.y))
 
 	} else if ebiten.IsKeyPressed(ebiten.KeyEnter) {
 		chooseBox()
