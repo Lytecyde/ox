@@ -48,16 +48,16 @@ func update(screen *ebiten.Image) error {
 	drawBox(screen, NewCoordinates(gameState.cursor.x*boxSize, gameState.cursor.y*boxSize), red)
 
 	if ebiten.IsKeyPressed(ebiten.KeyUp) {
-		gameState.moveCursor(NewCoordinates(gameState.cursor.x, gameState.cursor.y-1))
+		gameState.moveCursorUp()
 
 	} else if ebiten.IsKeyPressed(ebiten.KeyDown) {
-		gameState.moveCursor(NewCoordinates(gameState.cursor.x, gameState.cursor.y+1))
+		gameState.moveCursorDown()
 
 	} else if ebiten.IsKeyPressed(ebiten.KeyLeft) {
-		gameState.moveCursor(NewCoordinates(gameState.cursor.x-1, gameState.cursor.y))
+		gameState.moveCursorLeft()
 
 	} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
-		gameState.moveCursor(NewCoordinates(gameState.cursor.x+1, gameState.cursor.y))
+		gameState.moveCursorRight()
 
 	} else if ebiten.IsKeyPressed(ebiten.KeyEnter) {
 		chooseBox()

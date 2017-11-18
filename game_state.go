@@ -42,3 +42,19 @@ func (gameState *GameState) moveCursor(coordinates *Coordinates) {
 
 	gameState.keyAt = time.Now()
 }
+
+func (gameState *GameState) moveCursorUp() {
+	gameState.moveCursor(NewCoordinates(gameState.cursor.x, gameState.cursor.y-1))
+}
+
+func (gameState *GameState) moveCursorDown() {
+	gameState.moveCursor(NewCoordinates(gameState.cursor.x, gameState.cursor.y+1))
+}
+
+func (gameState *GameState) moveCursorLeft() {
+	gameState.moveCursor(NewCoordinates(gameState.cursor.x-1, gameState.cursor.y))
+}
+
+func (gameState *GameState) moveCursorRight() {
+	gameState.moveCursor(NewCoordinates(gameState.cursor.x+1, gameState.cursor.y))
+}
