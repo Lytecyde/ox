@@ -2,16 +2,15 @@ package main
 
 // Matrix represents a matrix on screen
 type Matrix struct {
-	dimensionx int
-	dimensiony int
-	fields     [][]int
+	Coordinates
+	fields [][]int
 }
 
 // NewMatrix returns instance
 func NewMatrix(dimensionx int, dimensiony int) *Matrix {
 	var m Matrix
-	m.dimensionx = dimensionx
-	m.dimensiony = dimensiony
+	m.x = dimensionx
+	m.y = dimensiony
 
 	//init fields
 	m.fields = make([][]int, dimensionx)

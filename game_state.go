@@ -30,7 +30,7 @@ func (gameState *GameState) moveCursor(coordinates *Coordinates) {
 		return
 	}
 
-	if coordinates.x >= gameState.matrix.dimensionx {
+	if coordinates.x >= gameState.matrix.x {
 		return
 	}
 
@@ -38,7 +38,7 @@ func (gameState *GameState) moveCursor(coordinates *Coordinates) {
 		return
 	}
 
-	if coordinates.y >= gameState.matrix.dimensiony {
+	if coordinates.y >= gameState.matrix.y {
 		return
 	}
 
