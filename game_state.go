@@ -70,3 +70,25 @@ func (gameState GameState) drawMatrix(screen *ebiten.Image) {
 func (gameState GameState) drawCursor(screen *ebiten.Image) {
 	drawBox(screen, NewCoordinates(gameState.cursor.x*boxSize, gameState.cursor.y*boxSize), red)
 }
+
+func (gameState *GameState) handleKeyPress() {
+	if ebiten.IsKeyPressed(ebiten.KeyUp) {
+		gameState.moveCursorUp()
+
+	} else if ebiten.IsKeyPressed(ebiten.KeyDown) {
+		gameState.moveCursorDown()
+
+	} else if ebiten.IsKeyPressed(ebiten.KeyLeft) {
+		gameState.moveCursorLeft()
+
+	} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
+		gameState.moveCursorRight()
+
+	} else if ebiten.IsKeyPressed(ebiten.KeyEnter) {
+		chooseBox()
+
+	} else if ebiten.IsKeyPressed(ebiten.KeySpace) {
+		chooseBox()
+
+	}
+}

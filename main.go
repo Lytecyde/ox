@@ -47,25 +47,7 @@ func update(screen *ebiten.Image) error {
 
 	gameState.drawCursor(screen)
 
-	if ebiten.IsKeyPressed(ebiten.KeyUp) {
-		gameState.moveCursorUp()
-
-	} else if ebiten.IsKeyPressed(ebiten.KeyDown) {
-		gameState.moveCursorDown()
-
-	} else if ebiten.IsKeyPressed(ebiten.KeyLeft) {
-		gameState.moveCursorLeft()
-
-	} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
-		gameState.moveCursorRight()
-
-	} else if ebiten.IsKeyPressed(ebiten.KeyEnter) {
-		chooseBox()
-
-	} else if ebiten.IsKeyPressed(ebiten.KeySpace) {
-		chooseBox()
-
-	}
+	gameState.handleKeyPress()
 
 	return nil
 }
