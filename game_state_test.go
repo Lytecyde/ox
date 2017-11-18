@@ -31,12 +31,8 @@ func Test_moveCursor_MovesCursorToGivenCoordinates(t *testing.T) {
 	gameState.moveCursor(coordinates)
 
 	// Assert
-	if gameState.cursor.x != coordinates.x {
-		t.Fatal("invalid x")
-	}
-
-	if gameState.cursor.y != coordinates.y {
-		t.Fatal("invalid y")
+	if !gameState.cursor.Equal(*coordinates) {
+		t.Fatal("invalid coordinates")
 	}
 }
 
@@ -49,12 +45,8 @@ func Test_moveCursor_DoesNotMoveCursor_InCaseOfNegativeX(t *testing.T) {
 	gameState.moveCursor(coordinates)
 
 	// Assert
-	if gameState.cursor.x == coordinates.x {
-		t.Fatal("invalid x")
-	}
-
-	if gameState.cursor.y == coordinates.y {
-		t.Fatal("invalid y")
+	if gameState.cursor.Equal(*coordinates) {
+		t.Fatal("invalid coordinates")
 	}
 }
 
@@ -67,12 +59,8 @@ func Test_moveCursor_DoesNotMoveCursor_InCaseOfOffScreenX(t *testing.T) {
 	gameState.moveCursor(coordinates)
 
 	// Assert
-	if gameState.cursor.x == coordinates.x {
-		t.Fatal("invalid x")
-	}
-
-	if gameState.cursor.y == coordinates.y {
-		t.Fatal("invalid y")
+	if gameState.cursor.Equal(*coordinates) {
+		t.Fatal("invalid coordinates")
 	}
 }
 
@@ -85,12 +73,8 @@ func Test_moveCursor_DoesNotMoveCursor_InCaseOfNegativeY(t *testing.T) {
 	gameState.moveCursor(coordinates)
 
 	// Assert
-	if gameState.cursor.x == coordinates.x {
-		t.Fatal("invalid x")
-	}
-
-	if gameState.cursor.y == coordinates.y {
-		t.Fatal("invalid y")
+	if gameState.cursor.Equal(*coordinates) {
+		t.Fatal("invalid coordinates")
 	}
 }
 
@@ -103,12 +87,8 @@ func Test_moveCursor_DoesNotMoveCursor_InCaseOfOffScreenY(t *testing.T) {
 	gameState.moveCursor(coordinates)
 
 	// Assert
-	if gameState.cursor.x == coordinates.x {
-		t.Fatal("invalid x")
-	}
-
-	if gameState.cursor.y == coordinates.y {
-		t.Fatal("invalid y")
+	if gameState.cursor.Equal(coordinates) {
+		t.Fatal("invalid coordinates")
 	}
 }
 
@@ -123,12 +103,8 @@ func Test_moveCursor_InCaseOfTimeIsWithinHumanPerceptionLimit(t *testing.T) {
 	gameState.moveCursor(coordinates)
 
 	// Assert
-	if gameState.cursor.x != coordinates.x {
-		t.Fatal("invalid x")
-	}
-
-	if gameState.cursor.y != coordinates.y {
-		t.Fatal("invalid y")
+	if !gameState.cursor.Equal(coordinates) {
+		t.Fatal("invalid coordinates")
 	}
 }
 
@@ -143,11 +119,7 @@ func Test_moveCursor_InCaseOfTimeIsOutOfHumanPerceptionLimit(t *testing.T) {
 	gameState.moveCursor(coordinates)
 
 	// Assert
-	if gameState.cursor.x == coordinates.x {
-		t.Fatal("invalid x")
-	}
-
-	if gameState.cursor.y == coordinates.y {
-		t.Fatal("invalid y")
+	if gameState.cursor.Equal(coordinates) {
+		t.Fatal("invalid coordinates")
 	}
 }
