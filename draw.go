@@ -35,9 +35,9 @@ func drawBox(screen *ebiten.Image, coordinates *Coordinates, clr color.Color) {
 
 	// draw left vertical
 	ebitenutil.DrawLine(screen,
-		float64(coordinates.x),
+		float64(coordinates.x+1),
 		float64(coordinates.y),
-		float64(coordinates.x),
+		float64(coordinates.x+1),
 		float64(coordinates.y+boxSize),
 		clr)
 
