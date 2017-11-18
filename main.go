@@ -32,12 +32,6 @@ const (
 
 var gameState = NewGameState(regularGameDimensionX, regularGameDimensionY)
 
-func chooseBox() {
-	// check if box is not taken yet in matrix
-
-	// mark box as taken in matrix
-}
-
 func update(screen *ebiten.Image) error {
 	if ebiten.IsRunningSlowly() {
 		return nil
