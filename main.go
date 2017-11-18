@@ -31,16 +31,10 @@ const (
 	boxSize = 150
 )
 
-var (
-	matrix = NewMatrix(regularGameDimensionX, regularGameDimensionY)
-
-	cursor = NewCoordinates(0, 0)
-
-	keyAt = time.Time{}
-)
+var gameState = NewGameState(regularGameDimensionX, regularGameDimensionY)
 
 func moveCursor(coordinates *Coordinates) {
-	if time.Now().Sub(keyAt).Seconds() < 0.2 {
+	if time.Now().Sub(gameState.keyAt).Seconds() < 0.2 {
 		return
 	}
 
@@ -60,9 +54,9 @@ func moveCursor(coordinates *Coordinates) {
 		return
 	}
 
-	cursor = coordinates
+	gameState.cursor = coordinates
 
-	keyAt = time.Now()
+	gameState.keyAt = time.Now()
 }
 
 func chooseBox() {
@@ -76,21 +70,21 @@ func update(screen *ebiten.Image) error {
 		return nil
 	}
 
-	drawMatrix(screen, matrix, gray)
+	drawMatrix(screen, gameState.matrix, gray)
 
-	drawBox(screen, NewCoordinates(cursor.x*boxSize, cursor.y*boxSize), red)
+	drawBox(screen, NewCoordinates(gameState.cursor.x*boxSize, gameState.cursor.y*boxSize), red)
 
 	if ebiten.IsKeyPressed(ebiten.KeyUp) {
-		moveCursor(NewCoordinates(cursor.x, cursor.y-1))
+		moveCursor(NewCoordinates(gameState.cursor.x, gameState.cursor.y-1))
 
 	} else if ebiten.IsKeyPressed(ebiten.KeyDown) {
-		moveCursor(NewCoordinates(cursor.x, cursor.y+1))
+		moveCursor(NewCoordinates(gameState.cursor.x, gameState.cursor.y+1))
 
 	} else if ebiten.IsKeyPressed(ebiten.KeyLeft) {
-		moveCursor(NewCoordinates(cursor.x-1, cursor.y))
+		moveCursor(NewCoordinates(gameState.cursor.x-1, gameState.cursor.y))
 
 	} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
-		moveCursor(NewCoordinates(cursor.x+1, cursor.y))
+		moveCursor(NewCoordinates(gameState.cursor.x+1, gameState.cursor.y))
 
 	} else if ebiten.IsKeyPressed(ebiten.KeyEnter) {
 		chooseBox()
