@@ -2,6 +2,7 @@ package main
 
 import (
 	"testing"
+	"time"
 )
 
 func Test_NewGameState_SetsMatrixSizeFromParameters(t *testing.T) {
@@ -97,6 +98,46 @@ func Test_moveCursor_DoesNotMoveCursor_InCaseOfOffScreenY(t *testing.T) {
 	// Arrange
 	gameState := NewGameState(100, 100)
 	coordinates := NewCoordinates(1, 101)
+
+	// Act
+	gameState.moveCursor(coordinates)
+
+	// Assert
+	if gameState.cursor.x == coordinates.x {
+		t.Fatal("invalid x")
+	}
+
+	if gameState.cursor.y == coordinates.y {
+		t.Fatal("invalid y")
+	}
+}
+
+func Test_moveCursor_InCaseOfTimeIsWithinHumanPerceptionLimit(t *testing.T) {
+	// Arrange
+	gameState := NewGameState(10, 10)
+	duration := time.Duration(1 * time.Second)
+	gameState.keyAt = time.Now().Add(-duration)
+	coordinates := NewCoordinates(5, 5)
+
+	// Act
+	gameState.moveCursor(coordinates)
+
+	// Assert
+	if gameState.cursor.x != coordinates.x {
+		t.Fatal("invalid x")
+	}
+
+	if gameState.cursor.y != coordinates.y {
+		t.Fatal("invalid y")
+	}
+}
+
+func Test_moveCursor_InCaseOfTimeIsOutOfHumanPerceptionLimit(t *testing.T) {
+	// Arrange
+	gameState := NewGameState(10, 10)
+	duration := time.Duration(100 * time.Millisecond)
+	gameState.keyAt = time.Now().Add(-duration)
+	coordinates := NewCoordinates(5, 5)
 
 	// Act
 	gameState.moveCursor(coordinates)
