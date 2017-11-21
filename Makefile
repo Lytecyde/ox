@@ -6,7 +6,7 @@ fmt:
 	go fmt
 
 run:
-	go run *.go
+	go build && ./ox
 
 lint:
 	gometalinter .

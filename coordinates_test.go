@@ -28,6 +28,6 @@ func Test_Equal_ReturnsFalse_InCaseOfNotEqualCoordinates(t *testing.T) {
 
 	// Assert
 	if equal {
-		t.Fatal("coordinates not are equal")
+		t.Fatal("coordinates are not equal")
 	}
 }
