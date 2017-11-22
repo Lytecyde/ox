@@ -2,6 +2,8 @@ package main
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_Equal_ReturnsTrue_InCaseOfEqualCoordinates(t *testing.T) {
@@ -13,9 +15,7 @@ func Test_Equal_ReturnsTrue_InCaseOfEqualCoordinates(t *testing.T) {
 	equal := c.Equal(other)
 
 	// Assert
-	if !equal {
-		t.Fatal("coordinates are equal")
-	}
+	assert.True(t, equal)
 }
 
 func Test_Equal_ReturnsFalse_InCaseOfNotEqualCoordinates(t *testing.T) {
@@ -27,7 +27,5 @@ func Test_Equal_ReturnsFalse_InCaseOfNotEqualCoordinates(t *testing.T) {
 	equal := c.Equal(other)
 
 	// Assert
-	if equal {
-		t.Fatal("coordinates are not equal")
-	}
+	assert.False(t, equal)
 }
