@@ -21,13 +21,15 @@ import (
 )
 
 const (
-	screenWidth  = 640
-	screenHeight = 480
+	boxSize = 150
 
 	regularGameDimensionX = 3
 	regularGameDimensionY = 3
 
-	boxSize = 150
+	borderMargin = 2
+
+	screenWidth  = boxSize*regularGameDimensionX + borderMargin
+	screenHeight = boxSize*regularGameDimensionY + borderMargin
 )
 
 var gameState = NewGameState(regularGameDimensionX, regularGameDimensionY)
