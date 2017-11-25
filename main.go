@@ -17,6 +17,7 @@ package main
 import (
 	"log"
 
+	"github.com/Lytecyde/ox/coordinates"
 	"github.com/hajimehoshi/ebiten"
 )
 
@@ -39,11 +40,12 @@ func update(screen *ebiten.Image) error {
 		return nil
 	}
 
-	gameState.drawMatrix(screen)
+	drawMatrix(screen, gameState.matrix, gray)
 
-	gameState.drawCursor(screen)
+	// draw cursor
+	drawBox(screen, coordinates.NewScreen(gameState.cursor.X*boxSize, gameState.cursor.Y*boxSize), red)
 
-	gameState.drawStates(screen)
+	drawStates(screen, gameState.matrix, blue, green)
 
 	gameState.handleKeyPress()
 

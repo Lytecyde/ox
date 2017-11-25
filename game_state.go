@@ -68,18 +68,6 @@ func (gameState *GameState) moveCursorRight() {
 	gameState.moveCursor(coordinates.NewMatrix(gameState.cursor.X+1, gameState.cursor.Y))
 }
 
-func (gameState GameState) drawMatrix(screen *ebiten.Image) {
-	drawMatrix(screen, gameState.matrix, gray)
-}
-
-func (gameState GameState) drawCursor(screen *ebiten.Image) {
-	drawBox(screen, coordinates.NewScreen(gameState.cursor.X*boxSize, gameState.cursor.Y*boxSize), red)
-}
-
-func (gameState GameState) drawStates(screen *ebiten.Image) {
-	drawStates(screen, gameState.matrix, blue, green)
-}
-
 func (gameState *GameState) handleKeyPress() {
 	if ebiten.IsKeyPressed(ebiten.KeyUp) {
 		gameState.moveCursorUp()
