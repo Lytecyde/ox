@@ -93,13 +93,21 @@ func (gameState *GameState) handleKeyPress() {
 	} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
 		gameState.moveCursorRight()
 
-	} else if ebiten.IsKeyPressed(ebiten.KeyEnter) && gameState.turnOf == player.Cross {
+	} else if isCrossAndPresses(gameState) {
 		gameState.setMark()
 
-	} else if ebiten.IsKeyPressed(ebiten.KeySpace) && gameState.turnOf == player.Naught {
+	} else if isNaughtAndPresses(gameState) {
 		gameState.setMark()
 
 	}
+}
+
+func isCrossAndPresses(gameState *GameState) bool {
+	return ebiten.IsKeyPressed(ebiten.KeyEnter) && gameState.turnOf == player.Cross
+}
+
+func isNaughtAndPresses(gameState *GameState) bool {
+	return ebiten.IsKeyPressed(ebiten.KeySpace) && gameState.turnOf == player.Naught
 }
 
 func (gameState *GameState) setMark() {
