@@ -30,7 +30,7 @@ func (gameState *GameState) moveCursor(coordinates *Coordinates) {
 		return
 	}
 
-	if coordinates.x >= gameState.matrix.x {
+	if coordinates.x >= gameState.matrix.dimensions.x {
 		return
 	}
 
@@ -38,7 +38,7 @@ func (gameState *GameState) moveCursor(coordinates *Coordinates) {
 		return
 	}
 
-	if coordinates.y >= gameState.matrix.y {
+	if coordinates.y >= gameState.matrix.dimensions.y {
 		return
 	}
 
@@ -71,6 +71,10 @@ func (gameState GameState) drawCursor(screen *ebiten.Image) {
 	drawBox(screen, NewCoordinates(gameState.cursor.x*boxSize, gameState.cursor.y*boxSize), red)
 }
 
+func (gameState GameState) drawStates(screen *ebiten.Image) {
+	drawStates(screen, gameState.matrix, blue, green)
+}
+
 func (gameState *GameState) handleKeyPress() {
 	if ebiten.IsKeyPressed(ebiten.KeyUp) {
 		gameState.moveCursorUp()
@@ -97,5 +101,5 @@ func (gameState *GameState) setMark() {
 	// check if box is not taken yet in matrix
 
 	// mark box as taken in matrix
-
+	gameState.matrix.setState(*gameState.cursor, fieldStatePlayerX)
 }

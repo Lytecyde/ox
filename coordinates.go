@@ -1,5 +1,9 @@
 package main
 
+import (
+	"fmt"
+)
+
 // Coordinates represents coordinates on screen
 type Coordinates struct {
 	x int
@@ -16,4 +20,8 @@ func NewCoordinates(x int, y int) *Coordinates {
 
 func (coordinates Coordinates) Equal(other Coordinates) bool {
 	return coordinates.x == other.x && coordinates.y == other.y
+}
+
+func (coordinates Coordinates) String() string {
+	return fmt.Sprintf("x=%d, y=%d", coordinates.x, coordinates.y)
 }

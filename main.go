@@ -43,6 +43,8 @@ func update(screen *ebiten.Image) error {
 
 	gameState.drawCursor(screen)
 
+	gameState.drawStates(screen)
+
 	gameState.handleKeyPress()
 
 	return nil

@@ -2,15 +2,15 @@ package main
 
 // Matrix represents a matrix on screen
 type Matrix struct {
-	Coordinates
-	fields [][]fieldState
+	dimensions Coordinates
+	fields     [][]fieldState
 }
 
 // NewMatrix returns instance
 func NewMatrix(dimensionx int, dimensiony int) *Matrix {
 	var m Matrix
-	m.x = dimensionx
-	m.y = dimensiony
+	m.dimensions.x = dimensionx
+	m.dimensions.y = dimensiony
 
 	//init fields
 	m.fields = make([][]fieldState, dimensionx)
@@ -21,6 +21,7 @@ func NewMatrix(dimensionx int, dimensiony int) *Matrix {
 	return &m
 }
 
-func (matrix *Matrix) setState(coordinates Coordinates, fields [][]fieldState) {
-
+func (matrix *Matrix) setState(coordinates Coordinates, newState fieldState) {
+	println(coordinates.String(), newState)
+	matrix.fields[coordinates.x][coordinates.y] = newState
 }
