@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/Lytecyde/ox/coordinates"
@@ -117,6 +118,8 @@ func alter(t player.Type) player.Type {
 		out = player.Naught
 	case player.Naught:
 		out = player.Cross
+	default:
+		panic(fmt.Sprintf("invalid player type: %d", t))
 	}
 	return out
 }
