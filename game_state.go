@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/Lytecyde/ox/coordinates"
+	"github.com/Lytecyde/ox/player"
 	"github.com/hajimehoshi/ebiten"
 )
 
@@ -12,6 +13,7 @@ type GameState struct {
 	matrix *Matrix
 	cursor *coordinates.Matrix
 	keyAt  time.Time
+	turnOf player.Type
 }
 
 // NewGameState returns new instance
@@ -19,6 +21,7 @@ func NewGameState(gameDimensionX, gameDimensionY int) *GameState {
 	return &GameState{
 		matrix: NewMatrix(gameDimensionX, gameDimensionY),
 		cursor: coordinates.NewMatrix(0, 0),
+		turnOf: player.Cross,
 	}
 }
 
@@ -102,5 +105,18 @@ func (gameState *GameState) setMark() {
 	// check if box is not taken yet in matrix
 
 	// mark box as taken in matrix
-	gameState.matrix.setState(*gameState.cursor, fieldStatePlayerX)
+
+	gameState.matrix.setState(*gameState.cursor, gameState.turnOf)
+	gameState.turnOf = alter(gameState.turnOf)
+}
+
+func alter(t player.Type) player.Type {
+	var out player.Type = player.Cross
+	switch t {
+	case player.Cross:
+		out = player.Naught
+	case player.Naught:
+		out = player.Cross
+	}
+	return out
 }

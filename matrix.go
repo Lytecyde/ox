@@ -2,12 +2,13 @@ package main
 
 import (
 	"github.com/Lytecyde/ox/coordinates"
+	"github.com/Lytecyde/ox/player"
 )
 
 // Matrix represents a matrix on screen
 type Matrix struct {
 	dimensions coordinates.Matrix
-	fields     [][]fieldState
+	fields     [][]player.Type
 }
 
 // NewMatrix returns instance
@@ -17,14 +18,14 @@ func NewMatrix(dimensionx int, dimensiony int) *Matrix {
 	m.dimensions.Y = dimensiony
 
 	//init fields
-	m.fields = make([][]fieldState, dimensionx)
+	m.fields = make([][]player.Type, dimensionx)
 	for i := 0; i < dimensionx; i = i + 1 {
-		m.fields[i] = make([]fieldState, dimensiony)
+		m.fields[i] = make([]player.Type, dimensiony)
 	}
 
 	return &m
 }
 
-func (matrix *Matrix) setState(c coordinates.Matrix, newState fieldState) {
+func (matrix *Matrix) setState(c coordinates.Matrix, newState player.Type) {
 	matrix.fields[c.X][c.Y] = newState
 }

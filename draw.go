@@ -4,6 +4,7 @@ import (
 	"image/color"
 
 	"github.com/Lytecyde/ox/coordinates"
+	"github.com/Lytecyde/ox/player"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
@@ -20,9 +21,10 @@ func drawStates(screen *ebiten.Image, matrix *Matrix, colorX, colorO color.Color
 	for x := 0; x < matrix.dimensions.X; x = x + 1 {
 		for y := 0; y < matrix.dimensions.Y; y = y + 1 {
 			switch matrix.fields[x][y] {
-			case fieldStatePlayerX:
+			case player.Cross:
 				drawCross(screen, coordinates.NewScreen(x*boxSize, y*boxSize), colorX)
-			case fieldStatePlayerO:
+			case player.Naught:
+				drawNaught(screen, coordinates.NewScreen(x*boxSize, y*boxSize), colorO)
 			}
 		}
 	}
@@ -75,5 +77,34 @@ func drawCross(screen *ebiten.Image, coordinates *coordinates.Screen, clr color.
 		float64(coordinates.Y),
 		float64(coordinates.X),
 		float64(coordinates.Y+boxSize),
+		clr)
+}
+
+func drawNaught(screen *ebiten.Image, coordinates *coordinates.Screen, clr color.Color) {
+	ebitenutil.DrawLine(screen,
+		float64(coordinates.X),
+		float64(coordinates.Y),
+		float64(coordinates.X+(boxSize/2)),
+		float64(coordinates.Y),
+		clr)
+
+	ebitenutil.DrawLine(screen,
+		float64(coordinates.X+(boxSize/2)),
+		float64(coordinates.Y),
+		float64(coordinates.X+(boxSize/2)),
+		float64(coordinates.Y+(boxSize/2)),
+		clr)
+	ebitenutil.DrawLine(screen,
+		float64(coordinates.X+1),
+		float64(coordinates.Y),
+		float64(coordinates.X+1),
+		float64(coordinates.Y+(boxSize/2)),
+		clr)
+
+	ebitenutil.DrawLine(screen,
+		float64(coordinates.X),
+		float64(coordinates.Y+(boxSize/2)),
+		float64(coordinates.X+(boxSize/2)),
+		float64(coordinates.Y+(boxSize/2)),
 		clr)
 }
