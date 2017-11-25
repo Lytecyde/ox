@@ -120,14 +120,12 @@ func (gameState *GameState) setMark() {
 }
 
 func alter(t player.Type) player.Type {
-	var out player.Type = player.Cross
 	switch t {
 	case player.Cross:
-		out = player.Naught
+		return player.Naught
 	case player.Naught:
-		out = player.Cross
-	default:
-		panic(fmt.Sprintf("invalid player type: %d", t))
+		return player.Cross
 	}
-	return out
+
+	panic(fmt.Sprintf("invalid player type: %d", t))
 }
