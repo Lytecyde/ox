@@ -93,29 +93,22 @@ func (gameState *GameState) handleKeyPress() {
 	} else if ebiten.IsKeyPressed(ebiten.KeyRight) {
 		gameState.moveCursorRight()
 
-	} else if isCrossAndPresses(gameState) {
-		gameState.setMark()
-
-	} else if isNaughtAndPresses(gameState) {
+	} else if ebiten.IsKeyPressed(ebiten.KeySpace) || ebiten.IsKeyPressed(ebiten.KeyEnter) {
 		gameState.setMark()
 
 	}
 }
 
-func isCrossAndPresses(gameState *GameState) bool {
-	return ebiten.IsKeyPressed(ebiten.KeyEnter) && gameState.turnOf == player.Cross
-}
-
-func isNaughtAndPresses(gameState *GameState) bool {
-	return ebiten.IsKeyPressed(ebiten.KeySpace) && gameState.turnOf == player.Naught
-}
-
 func (gameState *GameState) setMark() {
 	// check if box is not taken yet in matrix
+	if gameState.matrix.state(*gameState.cursor) != player.None {
+		return
+	}
 
 	// mark box as taken in matrix
-
 	gameState.matrix.setState(*gameState.cursor, gameState.turnOf)
+
+	// switch players, new turn
 	gameState.turnOf = alter(gameState.turnOf)
 }
 

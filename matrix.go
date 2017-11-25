@@ -29,3 +29,7 @@ func NewMatrix(dimensionx int, dimensiony int) *Matrix {
 func (matrix *Matrix) setState(c coordinates.Matrix, newState player.Type) {
 	matrix.fields[c.X][c.Y] = newState
 }
+
+func (matrix *Matrix) state(c coordinates.Matrix) player.Type {
+	return matrix.fields[c.X][c.Y]
+}
