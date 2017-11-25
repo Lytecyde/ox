@@ -4,6 +4,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/Lytecyde/ox/coordinates"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -15,68 +16,73 @@ func Test_NewGameState_SetsMatrixSizeFromParameters(t *testing.T) {
 	gameState := NewGameState(x, y)
 
 	// Assert
-	assert.Equal(t, gameState.matrix.x, x)
-	assert.Equal(t, gameState.matrix.y, y)
+	assert.Equal(t, x, gameState.matrix.dimensions.X)
+	assert.Equal(t, y, gameState.matrix.dimensions.Y)
 }
 
 func Test_moveCursor_MovesCursorToGivenCoordinates(t *testing.T) {
 	// Arrange
 	gameState := NewGameState(100, 100)
-	coordinates := NewCoordinates(2, 2)
+	c := coordinates.NewMatrix(2, 2)
 
 	// Act
-	gameState.moveCursor(coordinates)
+	gameState.moveCursor(c)
 
 	// Assert
-	assert.True(t, gameState.cursor.Equal(*coordinates))
+	assert.Equal(t, c.X, gameState.cursor.X)
+	assert.Equal(t, c.Y, gameState.cursor.Y)
 }
 
 func Test_moveCursor_DoesNotMoveCursor_InCaseOfNegativeX(t *testing.T) {
 	// Arrange
 	gameState := NewGameState(100, 100)
-	coordinates := NewCoordinates(-1, 2)
+	c := coordinates.NewMatrix(-1, 2)
 
 	// Act
-	gameState.moveCursor(coordinates)
+	gameState.moveCursor(c)
 
 	// Assert
-	assert.False(t, gameState.cursor.Equal(*coordinates))
+	assert.NotEqual(t, c.X, gameState.cursor.X)
+	assert.NotEqual(t, c.Y, gameState.cursor.Y)
 }
 
 func Test_moveCursor_DoesNotMoveCursor_InCaseOfOffScreenX(t *testing.T) {
 	// Arrange
 	gameState := NewGameState(100, 100)
-	coordinates := NewCoordinates(101, 2)
+	c := coordinates.NewMatrix(101, 2)
 
 	// Act
-	gameState.moveCursor(coordinates)
+	gameState.moveCursor(c)
 
 	// Assert
-	assert.False(t, gameState.cursor.Equal(*coordinates))
+	assert.NotEqual(t, c.X, gameState.cursor.X)
+	assert.NotEqual(t, c.Y, gameState.cursor.Y)
 }
 
 func Test_moveCursor_DoesNotMoveCursor_InCaseOfNegativeY(t *testing.T) {
 	// Arrange
 	gameState := NewGameState(100, 100)
-	coordinates := NewCoordinates(1, -1)
+	c := coordinates.NewMatrix(1, -1)
 
 	// Act
-	gameState.moveCursor(coordinates)
+	gameState.moveCursor(c)
 
 	// Assert
-	assert.False(t, gameState.cursor.Equal(*coordinates))
+	assert.NotEqual(t, c.X, gameState.cursor.X)
+	assert.NotEqual(t, c.Y, gameState.cursor.Y)
 }
 
 func Test_moveCursor_DoesNotMoveCursor_InCaseOfOffScreenY(t *testing.T) {
 	// Arrange
 	gameState := NewGameState(100, 100)
-	coordinates := NewCoordinates(1, 101)
+	c := coordinates.NewMatrix(1, 101)
 
 	// Act
-	gameState.moveCursor(coordinates)
+	gameState.moveCursor(c)
 
 	// Assert
-	assert.False(t, gameState.cursor.Equal(*coordinates))
+	assert.NotEqual(t, c.X, gameState.cursor.X)
+	assert.NotEqual(t, c.Y, gameState.cursor.Y)
 }
 
 func Test_moveCursor_InCaseOfTimeIsWithinHumanPerceptionLimit(t *testing.T) {
@@ -84,13 +90,14 @@ func Test_moveCursor_InCaseOfTimeIsWithinHumanPerceptionLimit(t *testing.T) {
 	gameState := NewGameState(10, 10)
 	duration := time.Duration(1 * time.Second)
 	gameState.keyAt = time.Now().Add(-duration)
-	coordinates := NewCoordinates(5, 5)
+	c := coordinates.NewMatrix(5, 5)
 
 	// Act
-	gameState.moveCursor(coordinates)
+	gameState.moveCursor(c)
 
 	// Assert
-	assert.True(t, gameState.cursor.Equal(*coordinates))
+	assert.Equal(t, c.X, gameState.cursor.X)
+	assert.Equal(t, c.Y, gameState.cursor.Y)
 }
 
 func Test_moveCursor_InCaseOfTimeIsOutOfHumanPerceptionLimit(t *testing.T) {
@@ -98,11 +105,12 @@ func Test_moveCursor_InCaseOfTimeIsOutOfHumanPerceptionLimit(t *testing.T) {
 	gameState := NewGameState(10, 10)
 	duration := time.Duration(100 * time.Millisecond)
 	gameState.keyAt = time.Now().Add(-duration)
-	coordinates := NewCoordinates(5, 5)
+	c := coordinates.NewMatrix(5, 5)
 
 	// Act
-	gameState.moveCursor(coordinates)
+	gameState.moveCursor(c)
 
 	// Assert
-	assert.False(t, gameState.cursor.Equal(*coordinates))
+	assert.NotEqual(t, c.X, gameState.cursor.X)
+	assert.NotEqual(t, c.Y, gameState.cursor.Y)
 }

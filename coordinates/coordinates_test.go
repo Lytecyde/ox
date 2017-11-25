@@ -1,4 +1,4 @@
-package main
+package coordinates
 
 import (
 	"testing"
@@ -8,8 +8,8 @@ import (
 
 func Test_Equal_ReturnsTrue_InCaseOfEqualCoordinates(t *testing.T) {
 	// Arrange
-	c := *NewCoordinates(1, 1)
-	other := *NewCoordinates(1, 1)
+	c := *NewScreenCoordinates(1, 1)
+	other := *NewScreenCoordinates(1, 1)
 
 	// Act
 	equal := c.Equal(other)
@@ -20,8 +20,8 @@ func Test_Equal_ReturnsTrue_InCaseOfEqualCoordinates(t *testing.T) {
 
 func Test_Equal_ReturnsFalse_InCaseOfNotEqualCoordinates(t *testing.T) {
 	// Arrange
-	c := *NewCoordinates(1, 1)
-	other := *NewCoordinates(2, 2)
+	c := *NewScreenCoordinates(1, 1)
+	other := *NewScreenCoordinates(2, 2)
 
 	// Act
 	equal := c.Equal(other)

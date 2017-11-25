@@ -1,16 +1,20 @@
 package main
 
+import (
+	"github.com/Lytecyde/ox/coordinates"
+)
+
 // Matrix represents a matrix on screen
 type Matrix struct {
-	dimensions Coordinates
+	dimensions coordinates.Matrix
 	fields     [][]fieldState
 }
 
 // NewMatrix returns instance
 func NewMatrix(dimensionx int, dimensiony int) *Matrix {
 	var m Matrix
-	m.dimensions.x = dimensionx
-	m.dimensions.y = dimensiony
+	m.dimensions.X = dimensionx
+	m.dimensions.Y = dimensiony
 
 	//init fields
 	m.fields = make([][]fieldState, dimensionx)
@@ -21,7 +25,6 @@ func NewMatrix(dimensionx int, dimensiony int) *Matrix {
 	return &m
 }
 
-func (matrix *Matrix) setState(coordinates Coordinates, newState fieldState) {
-	println(coordinates.String(), newState)
-	matrix.fields[coordinates.x][coordinates.y] = newState
+func (matrix *Matrix) setState(c coordinates.Matrix, newState fieldState) {
+	matrix.fields[c.X][c.Y] = newState
 }

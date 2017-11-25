@@ -3,13 +3,14 @@ package main
 import (
 	"time"
 
+	"github.com/Lytecyde/ox/coordinates"
 	"github.com/hajimehoshi/ebiten"
 )
 
 // GameState represents game state
 type GameState struct {
 	matrix *Matrix
-	cursor *Coordinates
+	cursor *coordinates.Matrix
 	keyAt  time.Time
 }
 
@@ -17,50 +18,50 @@ type GameState struct {
 func NewGameState(gameDimensionX, gameDimensionY int) *GameState {
 	return &GameState{
 		matrix: NewMatrix(gameDimensionX, gameDimensionY),
-		cursor: NewCoordinates(0, 0),
+		cursor: coordinates.NewMatrix(0, 0),
 	}
 }
 
-func (gameState *GameState) moveCursor(coordinates *Coordinates) {
+func (gameState *GameState) moveCursor(c *coordinates.Matrix) {
 	if time.Now().Sub(gameState.keyAt).Seconds() < 0.2 {
 		return
 	}
 
-	if coordinates.x < 0 {
+	if c.X < 0 {
 		return
 	}
 
-	if coordinates.x >= gameState.matrix.dimensions.x {
+	if c.X >= gameState.matrix.dimensions.X {
 		return
 	}
 
-	if coordinates.y < 0 {
+	if c.Y < 0 {
 		return
 	}
 
-	if coordinates.y >= gameState.matrix.dimensions.y {
+	if c.Y >= gameState.matrix.dimensions.Y {
 		return
 	}
 
-	gameState.cursor = coordinates
+	gameState.cursor = c
 
 	gameState.keyAt = time.Now()
 }
 
 func (gameState *GameState) moveCursorUp() {
-	gameState.moveCursor(NewCoordinates(gameState.cursor.x, gameState.cursor.y-1))
+	gameState.moveCursor(coordinates.NewMatrix(gameState.cursor.X, gameState.cursor.Y-1))
 }
 
 func (gameState *GameState) moveCursorDown() {
-	gameState.moveCursor(NewCoordinates(gameState.cursor.x, gameState.cursor.y+1))
+	gameState.moveCursor(coordinates.NewMatrix(gameState.cursor.X, gameState.cursor.Y+1))
 }
 
 func (gameState *GameState) moveCursorLeft() {
-	gameState.moveCursor(NewCoordinates(gameState.cursor.x-1, gameState.cursor.y))
+	gameState.moveCursor(coordinates.NewMatrix(gameState.cursor.X-1, gameState.cursor.Y))
 }
 
 func (gameState *GameState) moveCursorRight() {
-	gameState.moveCursor(NewCoordinates(gameState.cursor.x+1, gameState.cursor.y))
+	gameState.moveCursor(coordinates.NewMatrix(gameState.cursor.X+1, gameState.cursor.Y))
 }
 
 func (gameState GameState) drawMatrix(screen *ebiten.Image) {
@@ -68,7 +69,7 @@ func (gameState GameState) drawMatrix(screen *ebiten.Image) {
 }
 
 func (gameState GameState) drawCursor(screen *ebiten.Image) {
-	drawBox(screen, NewCoordinates(gameState.cursor.x*boxSize, gameState.cursor.y*boxSize), red)
+	drawBox(screen, coordinates.NewScreen(gameState.cursor.X*boxSize, gameState.cursor.Y*boxSize), red)
 }
 
 func (gameState GameState) drawStates(screen *ebiten.Image) {
