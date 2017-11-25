@@ -12,12 +12,11 @@ func drawMatrix(screen *ebiten.Image, matrix *Matrix, clr color.Color) {
 		for j := 0; j < regularGameDimensionY; j = j + 1 {
 			drawBox(screen, NewCoordinates(i*boxSize, j*boxSize), clr)
 		}
-
 	}
 }
 
 func drawBox(screen *ebiten.Image, coordinates *Coordinates, clr color.Color) {
-	// draw up horizontal
+	// draw top horizontal
 	ebitenutil.DrawLine(screen,
 		float64(coordinates.x),
 		float64(coordinates.y),
@@ -41,7 +40,7 @@ func drawBox(screen *ebiten.Image, coordinates *Coordinates, clr color.Color) {
 		float64(coordinates.y+boxSize),
 		clr)
 
-	// draw down horizontal
+	// draw bottom horizontal
 	ebitenutil.DrawLine(screen,
 		float64(coordinates.x),
 		float64(coordinates.y+boxSize),

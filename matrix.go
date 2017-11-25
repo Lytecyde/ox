@@ -3,7 +3,7 @@ package main
 // Matrix represents a matrix on screen
 type Matrix struct {
 	Coordinates
-	fields [][]int
+	fields [][]fieldState
 }
 
 // NewMatrix returns instance
@@ -13,9 +13,9 @@ func NewMatrix(dimensionx int, dimensiony int) *Matrix {
 	m.y = dimensiony
 
 	//init fields
-	m.fields = make([][]int, dimensionx)
+	m.fields = make([][]fieldState, dimensionx)
 	for i := 0; i < dimensionx; i = i + 1 {
-		m.fields[i] = make([]int, dimensiony)
+		m.fields[i] = make([]fieldState, dimensiony)
 	}
 
 	return &m
