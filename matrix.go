@@ -20,3 +20,7 @@ func NewMatrix(dimensionx int, dimensiony int) *Matrix {
 
 	return &m
 }
+
+func (matrix *Matrix) setState(coordinates Coordinates, fields [][]fieldState) {
+
+}

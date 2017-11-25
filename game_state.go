@@ -85,16 +85,17 @@ func (gameState *GameState) handleKeyPress() {
 		gameState.moveCursorRight()
 
 	} else if ebiten.IsKeyPressed(ebiten.KeyEnter) {
-		gameState.chooseBox()
+		gameState.setMark()
 
 	} else if ebiten.IsKeyPressed(ebiten.KeySpace) {
-		gameState.chooseBox()
+		gameState.setMark()
 
 	}
 }
 
-func (gameState *GameState) chooseBox() {
+func (gameState *GameState) setMark() {
 	// check if box is not taken yet in matrix
 
 	// mark box as taken in matrix
+
 }
