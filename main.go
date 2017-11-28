@@ -47,8 +47,10 @@ func update(screen *ebiten.Image) error {
 
 	drawStates(screen, gameState.matrix, blue, green)
 
-	gameState.handleKeyPress()
-
+	//gameloop
+	if !gameState.EndOfGame {
+		gameState.handleKeyPress()
+	}
 	return nil
 }
 
