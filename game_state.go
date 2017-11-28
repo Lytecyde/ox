@@ -88,15 +88,25 @@ func (gameState *GameState) handleKeyPress() {
 }
 
 func (gameState *GameState) setMark() {
-	// check if box is not taken yet in matrix
-	if gameState.matrix.state(*gameState.cursor) != player.None {
+
+	if gameState.isBoxTaken() {
 		return
 	}
 
-	// mark box as taken in matrix
-	gameState.matrix.setState(*gameState.cursor, gameState.turnOf)
+	gameState.markBox()
 
-	// switch players, new turn
+	gameState.switchPlayers()
+}
+
+func (gameState *GameState) isBoxTaken() bool {
+	return gameState.matrix.state(*gameState.cursor) != player.None
+}
+
+func (gameState *GameState) markBox() {
+	gameState.matrix.setState(*gameState.cursor, gameState.turnOf)
+}
+
+func (gameState *GameState) switchPlayers() {
 	gameState.turnOf = alter(gameState.turnOf)
 }
 

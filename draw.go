@@ -81,30 +81,33 @@ func drawCross(screen *ebiten.Image, coordinates *coordinates.Screen, clr color.
 }
 
 func drawNaught(screen *ebiten.Image, coordinates *coordinates.Screen, clr color.Color) {
+	var adjustment int = boxSize / 4
+	var startX = adjustment + coordinates.X
+	var startY = adjustment + coordinates.Y
 	ebitenutil.DrawLine(screen,
-		float64(coordinates.X),
-		float64(coordinates.Y),
-		float64(coordinates.X+(boxSize/2)),
-		float64(coordinates.Y),
+		float64(startX),
+		float64(startY),
+		float64(startX+(boxSize/2)),
+		float64(startY),
 		clr)
 
 	ebitenutil.DrawLine(screen,
-		float64(coordinates.X+(boxSize/2)),
-		float64(coordinates.Y),
-		float64(coordinates.X+(boxSize/2)),
-		float64(coordinates.Y+(boxSize/2)),
+		float64(startX+(boxSize/2)),
+		float64(startY),
+		float64(startX+(boxSize/2)),
+		float64(startY+(boxSize/2)),
 		clr)
 	ebitenutil.DrawLine(screen,
-		float64(coordinates.X+1),
-		float64(coordinates.Y),
-		float64(coordinates.X+1),
-		float64(coordinates.Y+(boxSize/2)),
+		float64(startX+1),
+		float64(startY),
+		float64(startX+1),
+		float64(startY+(boxSize/2)),
 		clr)
 
 	ebitenutil.DrawLine(screen,
-		float64(coordinates.X),
-		float64(coordinates.Y+(boxSize/2)),
-		float64(coordinates.X+(boxSize/2)),
-		float64(coordinates.Y+(boxSize/2)),
+		float64(startX),
+		float64(startY+(boxSize/2)),
+		float64(startX+(boxSize/2)),
+		float64(startY+(boxSize/2)),
 		clr)
 }
