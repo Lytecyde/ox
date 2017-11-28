@@ -169,7 +169,6 @@ func isAllTrue(all []bool) bool {
 
 func isDiagonalDownWin(p player.Type) bool {
 	win := make([]bool, regularGameDimensionX)
-	fmt.Println(len(win))
 	var i int = 0
 	var y int = 0
 	for x := 0; x < regularGameDimensionX; x = x + 1 {
@@ -209,7 +208,7 @@ func isColumnWin(p player.Type) bool {
 		if isAllTrue(win) {
 			return true
 		}
-		copy(win, setFalse(win))
+		win = make([]bool, regularGameDimensionX)
 	}
 	return false
 }
@@ -228,11 +227,4 @@ func isRowWin(p player.Type) bool {
 		win = make([]bool, regularGameDimensionX)
 	}
 	return false
-}
-
-func setFalse(all []bool) []bool {
-	for i := 0; i < len(all); i = i + 1 {
-		all[i] = false
-	}
-	return all
 }
