@@ -96,6 +96,9 @@ func (gameState *GameState) setMark() {
 	gameState.markBox()
 
 	gameState.switchPlayers()
+
+	gameState.isWinMessage()
+
 }
 
 func (gameState *GameState) isBoxTaken() bool {
@@ -119,4 +122,117 @@ func alter(t player.Type) player.Type {
 	}
 
 	panic(fmt.Sprintf("invalid player type: %d", t))
+}
+func (gamesState *GameState) isWin() bool {
+	return getWinner(gameState.turnOf) > player.None
+}
+
+func (gamesState *GameState) isWinMessage() {
+	var name [3]string
+	name[0] = "continue"
+	name[1] = "Naughts"
+	name[2] = "Crosses"
+	if gameState.isWin() {
+		fmt.Println(name[gameState.turnOf] + " wins!")
+	}
+}
+
+func getWinner(p player.Type) player.Type {
+	var winConditions int = 4
+	allWinConditions := make([]bool, winConditions)
+	allWinConditions[0] = isDiagonalDownWin(p)
+	allWinConditions[1] = isDiagonalUpWin(p)
+	allWinConditions[2] = isColumnWin(p)
+	allWinConditions[3] = isRowWin(p)
+
+	if isOneTrue(allWinConditions) == false {
+		return player.None
+	}
+	return p
+}
+
+func isOneTrue(all []bool) bool {
+	var oneTrue bool = false
+	for i := 0; i < len(all); i = i + 1 {
+		oneTrue = oneTrue || all[i]
+	}
+	return oneTrue
+}
+
+func isAllTrue(all []bool) bool {
+	var oneTrue bool = false
+	for i := 0; i < len(all); i = i + 1 {
+		oneTrue = oneTrue && all[i]
+	}
+	return oneTrue
+}
+
+func isDiagonalDownWin(p player.Type) bool {
+	win := make([]bool, regularGameDimensionX)
+	fmt.Println(len(win))
+	var i int = 0
+	var y int = 0
+	for x := 0; x < regularGameDimensionX; x = x + 1 {
+		y = x
+		if gameState.matrix.fields[x][y] == p {
+			win[i] = true
+			i++
+		}
+	}
+	i = 0
+	return isAllTrue(win)
+}
+
+func isDiagonalUpWin(p player.Type) bool {
+	var i int = 0
+	win := make([]bool, regularGameDimensionX)
+	var y int = 0
+	for x := 0; x < regularGameDimensionX; x = x + 1 {
+		y = regularGameDimensionY - 1 - x
+		if (x == y) && (gameState.matrix.fields[x][y] == p) {
+			win[i] = true
+			i++
+		}
+
+	}
+	return isAllTrue(win)
+}
+
+func isColumnWin(p player.Type) bool {
+	win := make([]bool, regularGameDimensionX)
+	for x := 0; x < regularGameDimensionX; x = x + 1 {
+		for y := 0; y < regularGameDimensionY; y = y + 1 {
+			if gameState.matrix.fields[x][y] == p {
+				win[y] = true
+			}
+		}
+		if isAllTrue(win) {
+			return true
+		}
+		copy(win, setFalse(win))
+	}
+	return false
+}
+
+func isRowWin(p player.Type) bool {
+	win := make([]bool, regularGameDimensionX)
+	for y := 0; y < regularGameDimensionY; y = y + 1 {
+		for x := 0; x < regularGameDimensionX; x = x + 1 {
+			if gameState.matrix.fields[x][y] == p {
+				win[x] = true
+			}
+		}
+		if isAllTrue(win) {
+			return true
+		}
+		win = make([]bool, regularGameDimensionX)
+	}
+	return false
+}
+
+func setFalse(all []bool) []bool {
+	for i := 0; i < len(all); i = i + 1 {
+		all[i] = false
+	}
+	return all
 }
