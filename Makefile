@@ -12,7 +12,7 @@ lint:
 	gometalinter .
 
 test:
-	go test
+	go test ./...
 
 coverage:
 	go test -coverprofile=coverage.out

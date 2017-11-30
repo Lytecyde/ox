@@ -5,22 +5,23 @@ import (
 
 	"github.com/Lytecyde/ox/coordinates"
 	"github.com/Lytecyde/ox/player"
+	"github.com/Lytecyde/ox/playfield"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
-func drawMatrix(screen *ebiten.Image, matrix *Matrix, clr color.Color) {
-	for i := 0; i < matrix.dimensions.X; i = i + 1 {
-		for j := 0; j < matrix.dimensions.Y; j = j + 1 {
+func drawMatrix(screen *ebiten.Image, matrix *playfield.Matrix, clr color.Color) {
+	for i := 0; i < matrix.Dimensions.X; i = i + 1 {
+		for j := 0; j < matrix.Dimensions.Y; j = j + 1 {
 			drawBox(screen, coordinates.NewScreen(i*boxSize, j*boxSize), clr)
 		}
 	}
 }
 
-func drawStates(screen *ebiten.Image, matrix *Matrix, colorX, colorO color.Color) {
-	for x := 0; x < matrix.dimensions.X; x = x + 1 {
-		for y := 0; y < matrix.dimensions.Y; y = y + 1 {
-			switch matrix.fields[x][y] {
+func drawStates(screen *ebiten.Image, matrix *playfield.Matrix, colorX, colorO color.Color) {
+	for x := 0; x < matrix.Dimensions.X; x = x + 1 {
+		for y := 0; y < matrix.Dimensions.Y; y = y + 1 {
+			switch matrix.Fields[x][y] {
 			case player.Cross:
 				drawCross(screen, coordinates.NewScreen(x*boxSize, y*boxSize), colorX)
 			case player.Naught:

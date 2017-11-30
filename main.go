@@ -18,38 +18,42 @@ import (
 	"log"
 
 	"github.com/Lytecyde/ox/coordinates"
+	"github.com/Lytecyde/ox/data"
+	"github.com/Lytecyde/ox/state"
 	"github.com/hajimehoshi/ebiten"
 )
 
-const (
-	boxSize = 150
+var boxSize int = data.BoxSize
 
-	regularGameDimensionX = 3
-	regularGameDimensionY = 3
+var regularGameDimensionX int = data.RegularGameDimensionX
+var regularGameDimensionY int = data.RegularGameDimensionY
 
-	borderMargin = 2
+var borderMargin int = data.BorderMargin
 
-	screenWidth  = boxSize*regularGameDimensionX + borderMargin
-	screenHeight = boxSize*regularGameDimensionY + borderMargin
-)
+var screenWidth int = boxSize*regularGameDimensionX + borderMargin
+var screenHeight int = boxSize*regularGameDimensionY + borderMargin
 
-var gameState = NewGameState(regularGameDimensionX, regularGameDimensionY)
+var gameState = state.NewGame(regularGameDimensionX,
+	regularGameDimensionY)
 
 func update(screen *ebiten.Image) error {
 	if ebiten.IsRunningSlowly() {
 		return nil
 	}
 
-	drawMatrix(screen, gameState.matrix, gray)
+	drawMatrix(screen, gameState.Matrix, gray)
 
 	// draw cursor
-	drawBox(screen, coordinates.NewScreen(gameState.cursor.X*boxSize, gameState.cursor.Y*boxSize), red)
+	drawBox(screen,
+		coordinates.NewScreen(gameState.Cursor.X*boxSize,
+			gameState.Cursor.Y*boxSize),
+		red)
 
-	drawStates(screen, gameState.matrix, blue, green)
+	drawStates(screen, gameState.Matrix, blue, green)
 
 	//gameloop
 	if !gameState.EndOfGame {
-		gameState.handleKeyPress()
+		gameState.HandleKeyPress()
 	}
 	return nil
 }
