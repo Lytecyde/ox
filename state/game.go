@@ -109,8 +109,8 @@ func (gameState Game) isBoxTaken() bool {
 }
 
 func (gamesState Game) isWin() bool {
-	if winner := gamesState.getWinner(gamesState.currentPlayer); winner != player.None {
-		gamesState.winner = gamesState.getWinner(gamesState.currentPlayer)
+	if gamesState.isWinner(gamesState.currentPlayer) {
+		gamesState.winner = gamesState.currentPlayer
 		gamesState.Finished = true
 		return true
 	}
@@ -118,27 +118,8 @@ func (gamesState Game) isWin() bool {
 	return false
 }
 
-func (gameState Game) getWinner(p player.Type) player.Type {
-	const winConditions = 4
-	allWinConditions := make([]bool, winConditions)
-	allWinConditions[0] = gameState.isDiagonalDownWin(p)
-	allWinConditions[1] = gameState.isDiagonalUpWin(p)
-	allWinConditions[2] = gameState.isColumnWin(p)
-	allWinConditions[3] = gameState.isRowWin(p)
-
-	if !isOneTrue(allWinConditions) {
-		return player.None
-	}
-
-	return p
-}
-
-func isOneTrue(all []bool) bool {
-	oneTrue := false
-	for i := 0; i < len(all); i = i + 1 {
-		oneTrue = oneTrue || all[i]
-	}
-	return oneTrue
+func (gameState Game) isWinner(p player.Type) bool {
+	return gameState.isDiagonalDownWin(p) || gameState.isDiagonalUpWin(p) || gameState.isColumnWin(p) || gameState.isRowWin(p)
 }
 
 func (gamesState Game) isDiagonalDownWin(p player.Type) bool {
@@ -186,6 +167,7 @@ func (gamesState Game) isColumnWin(p player.Type) bool {
 
 		win = make([]bool, settings.MatrixWidth)
 	}
+
 	return false
 }
 
