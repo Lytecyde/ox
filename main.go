@@ -31,13 +31,13 @@ func update(screen *ebiten.Image) error {
 		return nil
 	}
 
-	draw.Matrix(screen, gameState.Matrix, gray)
+	draw.Matrix(screen, gameState.Matrix, settings.MatrixColor)
 
 	// draw cursor
 	c := coordinates.NewScreen(gameState.Cursor.X*settings.BoxSize, gameState.Cursor.Y*settings.BoxSize)
-	draw.Box(screen, c, settings.BoxSize, red)
+	draw.Box(screen, c, settings.BoxSize, settings.CursorColor)
 
-	draw.States(screen, gameState.Matrix, blue, green)
+	draw.States(screen, gameState.Matrix, settings.CrossesColor, settings.NaughtsColor)
 
 	//gameloop
 	if !gameState.Finished {
