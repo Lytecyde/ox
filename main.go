@@ -34,7 +34,7 @@ func update(screen *ebiten.Image) error {
 	draw.Matrix(screen, gameState.Matrix, gray)
 
 	// draw cursor
-	draw.Box(screen, coordinates.NewScreen(gameState.Cursor.X*data.BoxSize, gameState.Cursor.Y*data.BoxSize), red)
+	draw.Box(screen, coordinates.NewScreen(gameState.Cursor.X*data.BoxSize, gameState.Cursor.Y*data.BoxSize), data.BoxSize, red)
 
 	draw.States(screen, gameState.Matrix, blue, green)
 
