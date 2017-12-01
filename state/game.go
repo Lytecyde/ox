@@ -204,14 +204,16 @@ func (gamesState Game) isRowWin(p player.Type) bool {
 
 		win = make([]bool, settings.MatrixWidth)
 	}
+
 	return false
 }
 
 func isAllTrue(all []bool) bool {
-	allTrue := true
 	for i := 0; i < len(all); i = i + 1 {
-		allTrue = allTrue && all[i]
+		if !all[i] {
+			return false
+		}
 	}
 
-	return allTrue
+	return true
 }
