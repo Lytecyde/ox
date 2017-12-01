@@ -104,13 +104,13 @@ func (gameState *Game) setMark() {
 	gameState.currentPlayer = player.Switch(gameState.currentPlayer)
 }
 
-func (gameState *Game) isBoxTaken() bool {
+func (gameState Game) isBoxTaken() bool {
 	return gameState.Matrix.State(*gameState.Cursor) != player.None
 }
 
-func isWin(gamesState *Game) bool {
-	if int(getWinner(gamesState.currentPlayer, *gamesState)) > int(player.None) {
-		gamesState.winner = getWinner(gamesState.currentPlayer, *gamesState)
+func (gamesState Game) isWin() bool {
+	if winner := gamesState.getWinner(gamesState.currentPlayer); winner != player.None {
+		gamesState.winner = gamesState.getWinner(gamesState.currentPlayer)
 		gamesState.Finished = true
 		return true
 	}
@@ -118,17 +118,18 @@ func isWin(gamesState *Game) bool {
 	return false
 }
 
-func getWinner(p player.Type, gamesState Game) player.Type {
+func (gameState Game) getWinner(p player.Type) player.Type {
 	const winConditions = 4
 	allWinConditions := make([]bool, winConditions)
-	allWinConditions[0] = isDiagonalDownWin(p, &gamesState)
-	allWinConditions[1] = isDiagonalUpWin(p, &gamesState)
-	allWinConditions[2] = isColumnWin(p, &gamesState)
-	allWinConditions[3] = isRowWin(p, &gamesState)
+	allWinConditions[0] = gameState.isDiagonalDownWin(p)
+	allWinConditions[1] = gameState.isDiagonalUpWin(p)
+	allWinConditions[2] = gameState.isColumnWin(p)
+	allWinConditions[3] = gameState.isRowWin(p)
 
-	if isOneTrue(allWinConditions) == false {
+	if !isOneTrue(allWinConditions) {
 		return player.None
 	}
+
 	return p
 }
 
@@ -140,7 +141,7 @@ func isOneTrue(all []bool) bool {
 	return oneTrue
 }
 
-func isDiagonalDownWin(p player.Type, gamesState *Game) bool {
+func (gamesState Game) isDiagonalDownWin(p player.Type) bool {
 	win := make([]bool, settings.MatrixWidth)
 	i := 0
 	y := 0
@@ -155,7 +156,7 @@ func isDiagonalDownWin(p player.Type, gamesState *Game) bool {
 	return isAllTrue(win)
 }
 
-func isDiagonalUpWin(p player.Type, gamesState *Game) bool {
+func (gamesState Game) isDiagonalUpWin(p player.Type) bool {
 	i := 0
 	win := make([]bool, settings.MatrixWidth)
 	y := 0
@@ -170,7 +171,7 @@ func isDiagonalUpWin(p player.Type, gamesState *Game) bool {
 	return isAllTrue(win)
 }
 
-func isColumnWin(p player.Type, gamesState *Game) bool {
+func (gamesState Game) isColumnWin(p player.Type) bool {
 	win := make([]bool, settings.MatrixWidth)
 	for x := 0; x < settings.MatrixWidth; x = x + 1 {
 		for y := 0; y < settings.MatrixHeight; y = y + 1 {
@@ -188,7 +189,7 @@ func isColumnWin(p player.Type, gamesState *Game) bool {
 	return false
 }
 
-func isRowWin(p player.Type, gamesState *Game) bool {
+func (gamesState Game) isRowWin(p player.Type) bool {
 	win := make([]bool, settings.MatrixWidth)
 	for y := 0; y < settings.MatrixHeight; y = y + 1 {
 		for x := 0; x < settings.MatrixWidth; x = x + 1 {
