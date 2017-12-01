@@ -65,7 +65,6 @@ func (gameState *Game) moveCursorUp() {
 }
 
 func (gameState *Game) moveCursorDown() {
-	fmt.Println("handles keypresses dn")
 	gameState.moveCursor(coordinates.NewMatrix(gameState.Cursor.X, gameState.Cursor.Y+1))
 }
 
@@ -98,15 +97,11 @@ func (gameState *Game) HandleKeyPress() {
 }
 
 func (gameState *Game) setMark() {
-
 	if gameState.isBoxTaken() {
 		return
 	}
 
 	gameState.markBox()
-
-	WriteMessage(gameState)
-
 	gameState.switchPlayers()
 }
 

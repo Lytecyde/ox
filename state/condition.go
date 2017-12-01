@@ -5,16 +5,6 @@ import (
 	"github.com/Lytecyde/ox/player"
 )
 
-func WriteMessage(gamesState *Game) {
-	var name [3]string
-	name[0] = "continue"
-	name[1] = "Crosses"
-	name[2] = "Naughts"
-	if isWin(gamesState) {
-		return
-	}
-}
-
 func isWin(gamesState *Game) bool {
 	if int(getWinner(gamesState.TurnOf, *gamesState)) > int(player.None) {
 		gamesState.Winner = getWinner(gamesState.TurnOf, *gamesState)
