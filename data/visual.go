@@ -1,11 +1,13 @@
 package data
 
-var BoxSize int = 150
+const (
+	BoxSize = 150
 
-var RegularGameDimensionX int = 3
-var RegularGameDimensionY int = 3
+	RegularGameDimensionX = 3
+	RegularGameDimensionY = 3
 
-var BorderMargin int = 2
+	BorderMargin = 2
 
-var ScreenWidth int = BoxSize*RegularGameDimensionX + BorderMargin
-var ScreenHeight int = BoxSize*RegularGameDimensionY + BorderMargin
+	ScreenWidth  = BoxSize*RegularGameDimensionX + BorderMargin
+	ScreenHeight = BoxSize*RegularGameDimensionY + BorderMargin
+)
