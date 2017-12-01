@@ -19,6 +19,7 @@ import (
 
 	"github.com/Lytecyde/ox/coordinates"
 	"github.com/Lytecyde/ox/data"
+	"github.com/Lytecyde/ox/draw"
 	"github.com/Lytecyde/ox/state"
 	"github.com/hajimehoshi/ebiten"
 )
@@ -30,12 +31,12 @@ func update(screen *ebiten.Image) error {
 		return nil
 	}
 
-	drawMatrix(screen, gameState.Matrix, gray)
+	draw.Matrix(screen, gameState.Matrix, gray)
 
 	// draw cursor
-	drawBox(screen, coordinates.NewScreen(gameState.Cursor.X*data.BoxSize, gameState.Cursor.Y*data.BoxSize), red)
+	draw.Box(screen, coordinates.NewScreen(gameState.Cursor.X*data.BoxSize, gameState.Cursor.Y*data.BoxSize), red)
 
-	drawStates(screen, gameState.Matrix, blue, green)
+	draw.States(screen, gameState.Matrix, blue, green)
 
 	//gameloop
 	if !gameState.Finished {
