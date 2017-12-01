@@ -1,8 +1,6 @@
 package state
 
 import (
-	"fmt"
-
 	"github.com/Lytecyde/ox/data"
 	"github.com/Lytecyde/ox/player"
 )
@@ -13,10 +11,8 @@ func WriteMessage(gamesState *Game) {
 	name[1] = "Crosses"
 	name[2] = "Naughts"
 	if isWin(gamesState) {
-		fmt.Println(name[gamesState.TurnOf] + " wins!")
 		return
 	}
-	fmt.Println("game continues")
 }
 
 func isWin(gamesState *Game) bool {
@@ -83,8 +79,6 @@ func isColumnWin(p player.Type, gamesState *Game) bool {
 	win := make([]bool, data.RegularGameDimensionX)
 	for x := 0; x < data.RegularGameDimensionX; x = x + 1 {
 		for y := 0; y < data.RegularGameDimensionY; y = y + 1 {
-			fmt.Print("nr of player on the field")
-			fmt.Println(int(gamesState.Matrix.Fields[x][y]))
 			if (int(gamesState.Matrix.Fields[x][y])) == (int(p)) {
 				win[y] = true
 			}
