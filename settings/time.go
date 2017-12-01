@@ -1,5 +1,5 @@
 package settings
 
 const (
-	HumanReactionSec = 0.2
+	HumanReactionSeconds = 0.2
 )

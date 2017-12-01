@@ -32,7 +32,7 @@ func NewGame(gameDimensionX, gameDimensionY int) *Game {
 }
 
 func (gameState *Game) moveCursor(c *coordinates.Matrix) error {
-	if time.Now().Sub(gameState.KeyAt).Seconds() < 0.2 {
+	if time.Now().Sub(gameState.KeyAt).Seconds() < settings.HumanReactionSeconds {
 		return errors.Errorf("less than human reaction time limit")
 	}
 

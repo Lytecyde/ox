@@ -24,7 +24,7 @@ func Test_NewGameState_SetsMatrixSizeFromParameters(t *testing.T) {
 func Test_moveCursor_MovesCursorToGivenCoordinates(t *testing.T) {
 	// Arrange
 	gameState := NewGame(100, 100)
-	gameState.KeyAt = time.Now().Add(-(settings.HumanReactionSec * 1000) * time.Millisecond)
+	gameState.KeyAt = time.Now().Add(-(settings.HumanReactionSeconds * 1000) * time.Millisecond)
 	c := coordinates.NewMatrix(2, 2)
 
 	// Act
