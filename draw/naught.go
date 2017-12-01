@@ -4,13 +4,14 @@ import (
 	"image/color"
 
 	"github.com/Lytecyde/ox/coordinates"
-	"github.com/Lytecyde/ox/data"
+	"github.com/Lytecyde/ox/settings"
 	"github.com/hajimehoshi/ebiten"
 )
 
 func Naught(screen *ebiten.Image, c *coordinates.Screen, clr color.Color) {
-	adjustment := data.BoxSize / 4
-	width := data.BoxSize / 2
+	adjustment := settings.BoxSize / 4
+	width := settings.BoxSize / 2
+	newC := coordinates.NewScreen(c.X+adjustment, c.Y+adjustment)
 
-	Box(screen, coordinates.NewScreen(c.X+adjustment, c.Y+adjustment), width, clr)
+	Box(screen, newC, width, clr)
 }

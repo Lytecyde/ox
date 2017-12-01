@@ -4,9 +4,9 @@ import (
 	"time"
 
 	"github.com/Lytecyde/ox/coordinates"
-	"github.com/Lytecyde/ox/data"
 	"github.com/Lytecyde/ox/player"
 	"github.com/Lytecyde/ox/playfield"
+	"github.com/Lytecyde/ox/settings"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/juju/errors"
 )
@@ -148,10 +148,10 @@ func isOneTrue(all []bool) bool {
 }
 
 func isDiagonalDownWin(p player.Type, gamesState *Game) bool {
-	win := make([]bool, data.RegularGameDimensionX)
+	win := make([]bool, settings.MatrixWidth)
 	var i int = 0
 	var y int = 0
-	for x := 0; x < data.RegularGameDimensionX; x = x + 1 {
+	for x := 0; x < settings.MatrixWidth; x = x + 1 {
 		y = x
 		if gamesState.Matrix.Fields[x][y] == p {
 			win[i] = true
@@ -164,10 +164,10 @@ func isDiagonalDownWin(p player.Type, gamesState *Game) bool {
 
 func isDiagonalUpWin(p player.Type, gamesState *Game) bool {
 	var i int = 0
-	win := make([]bool, data.RegularGameDimensionX)
+	win := make([]bool, settings.MatrixWidth)
 	var y int = 0
-	for x := 0; x < data.RegularGameDimensionX; x = x + 1 {
-		y = data.RegularGameDimensionY - 1 - x
+	for x := 0; x < settings.MatrixWidth; x = x + 1 {
+		y = settings.MatrixHeight - 1 - x
 		if (x == y) && (gamesState.Matrix.Fields[x][y] == p) {
 			win[i] = true
 			i++
@@ -177,9 +177,9 @@ func isDiagonalUpWin(p player.Type, gamesState *Game) bool {
 }
 
 func isColumnWin(p player.Type, gamesState *Game) bool {
-	win := make([]bool, data.RegularGameDimensionX)
-	for x := 0; x < data.RegularGameDimensionX; x = x + 1 {
-		for y := 0; y < data.RegularGameDimensionY; y = y + 1 {
+	win := make([]bool, settings.MatrixWidth)
+	for x := 0; x < settings.MatrixWidth; x = x + 1 {
+		for y := 0; y < settings.MatrixHeight; y = y + 1 {
 			if (int(gamesState.Matrix.Fields[x][y])) == (int(p)) {
 				win[y] = true
 			}
@@ -188,15 +188,15 @@ func isColumnWin(p player.Type, gamesState *Game) bool {
 		if isAllTrue(win) {
 			return true
 		}
-		win = make([]bool, data.RegularGameDimensionX)
+		win = make([]bool, settings.MatrixWidth)
 	}
 	return false
 }
 
 func isRowWin(p player.Type, gamesState *Game) bool {
-	win := make([]bool, data.RegularGameDimensionX)
-	for y := 0; y < data.RegularGameDimensionY; y = y + 1 {
-		for x := 0; x < data.RegularGameDimensionX; x = x + 1 {
+	win := make([]bool, settings.MatrixWidth)
+	for y := 0; y < settings.MatrixHeight; y = y + 1 {
+		for x := 0; x < settings.MatrixWidth; x = x + 1 {
 			if (int(gamesState.Matrix.Fields[x][y])) == (int(p)) {
 				win[x] = true
 			}
@@ -204,7 +204,7 @@ func isRowWin(p player.Type, gamesState *Game) bool {
 		if isAllTrue(win) {
 			return true
 		}
-		win = make([]bool, data.RegularGameDimensionX)
+		win = make([]bool, settings.MatrixWidth)
 	}
 	return false
 }

@@ -18,13 +18,13 @@ import (
 	"log"
 
 	"github.com/Lytecyde/ox/coordinates"
-	"github.com/Lytecyde/ox/data"
 	"github.com/Lytecyde/ox/draw"
+	"github.com/Lytecyde/ox/settings"
 	"github.com/Lytecyde/ox/state"
 	"github.com/hajimehoshi/ebiten"
 )
 
-var gameState = state.NewGame(data.RegularGameDimensionX, data.RegularGameDimensionY)
+var gameState = state.NewGame(settings.MatrixWidth, settings.MatrixHeight)
 
 func update(screen *ebiten.Image) error {
 	if ebiten.IsRunningSlowly() {
@@ -34,7 +34,8 @@ func update(screen *ebiten.Image) error {
 	draw.Matrix(screen, gameState.Matrix, gray)
 
 	// draw cursor
-	draw.Box(screen, coordinates.NewScreen(gameState.Cursor.X*data.BoxSize, gameState.Cursor.Y*data.BoxSize), data.BoxSize, red)
+	c := coordinates.NewScreen(gameState.Cursor.X*settings.BoxSize, gameState.Cursor.Y*settings.BoxSize)
+	draw.Box(screen, c, settings.BoxSize, red)
 
 	draw.States(screen, gameState.Matrix, blue, green)
 
@@ -47,7 +48,7 @@ func update(screen *ebiten.Image) error {
 }
 
 func main() {
-	if err := ebiten.Run(update, data.ScreenWidth, data.ScreenHeight, 1, "TripsTrapsTrull Shapes (Ebiten Demo)"); err != nil {
+	if err := ebiten.Run(update, settings.ScreenWidth, settings.ScreenHeight, 1, "Naughts & Crosses"); err != nil {
 		log.Fatal(err)
 	}
 }
