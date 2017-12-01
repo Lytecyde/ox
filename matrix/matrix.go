@@ -1,4 +1,4 @@
-package playfield
+package matrix
 
 import (
 	"github.com/Lytecyde/ox/coordinates"

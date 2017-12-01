@@ -4,15 +4,15 @@ import (
 	"time"
 
 	"github.com/Lytecyde/ox/coordinates"
+	"github.com/Lytecyde/ox/matrix"
 	"github.com/Lytecyde/ox/player"
-	"github.com/Lytecyde/ox/playfield"
 	"github.com/Lytecyde/ox/settings"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/juju/errors"
 )
 
 type Game struct {
-	Matrix        *playfield.Matrix
+	Matrix        *matrix.Matrix
 	Cursor        *coordinates.Matrix
 	KeyAt         time.Time
 	currentPlayer player.Type
@@ -23,7 +23,7 @@ type Game struct {
 // NewGame returns new instance
 func NewGame(gameDimensionX, gameDimensionY int) *Game {
 	return &Game{
-		Matrix:        playfield.NewMatrix(gameDimensionX, gameDimensionY),
+		Matrix:        matrix.NewMatrix(gameDimensionX, gameDimensionY),
 		Cursor:        coordinates.NewMatrix(0, 0),
 		KeyAt:         time.Now(),
 		currentPlayer: player.Cross,
