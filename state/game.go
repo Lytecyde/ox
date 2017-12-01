@@ -161,7 +161,7 @@ func isDiagonalUpWin(p player.Type, gamesState *Game) bool {
 	y := 0
 	for x := 0; x < settings.MatrixWidth; x = x + 1 {
 		y = settings.MatrixHeight - 1 - x
-		if (x == y) && (gamesState.Matrix.Fields[x][y] == p) {
+		if x == y && gamesState.Matrix.Fields[x][y] == p {
 			win[i] = true
 			i++
 		}
@@ -174,7 +174,7 @@ func isColumnWin(p player.Type, gamesState *Game) bool {
 	win := make([]bool, settings.MatrixWidth)
 	for x := 0; x < settings.MatrixWidth; x = x + 1 {
 		for y := 0; y < settings.MatrixHeight; y = y + 1 {
-			if (int(gamesState.Matrix.Fields[x][y])) == (int(p)) {
+			if gamesState.Matrix.Fields[x][y] == p {
 				win[y] = true
 			}
 		}
@@ -192,7 +192,7 @@ func isRowWin(p player.Type, gamesState *Game) bool {
 	win := make([]bool, settings.MatrixWidth)
 	for y := 0; y < settings.MatrixHeight; y = y + 1 {
 		for x := 0; x < settings.MatrixWidth; x = x + 1 {
-			if (int(gamesState.Matrix.Fields[x][y])) == (int(p)) {
+			if gamesState.Matrix.Fields[x][y] == p {
 				win[x] = true
 			}
 		}
