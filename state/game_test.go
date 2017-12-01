@@ -117,8 +117,6 @@ func Test_moveCursor_MovesCursor_InCaseOfSuccess(t *testing.T) {
 func Test_moveCursor_ReturnsError_InCaseOfTimeIsOutOfHumanPerceptionLimit(t *testing.T) {
 	// Arrange
 	gameState := NewGame(10, 10)
-	duration := time.Duration(100 * time.Millisecond)
-	gameState.KeyAt = time.Now().Add(-duration)
 	c := coordinates.NewMatrix(5, 5)
 
 	// Act
@@ -129,4 +127,60 @@ func Test_moveCursor_ReturnsError_InCaseOfTimeIsOutOfHumanPerceptionLimit(t *tes
 	assert.Equal(t, "less than human reaction time limit", err.Error())
 	assert.NotEqual(t, c.X, gameState.Cursor.X)
 	assert.NotEqual(t, c.Y, gameState.Cursor.Y)
+}
+
+func Test_moveCursorUp_MovesCursorUp_InCaseOfSuccess(t *testing.T) {
+	// Arrange
+	gameState := NewGame(10, 10)
+	gameState.KeyAt = time.Now().Add(-1 * time.Second)
+	gameState.Cursor = coordinates.NewMatrix(5, 5)
+
+	// Act
+	gameState.moveCursorUp()
+
+	// Assert
+	assert.Equal(t, 5, gameState.Cursor.X)
+	assert.Equal(t, 4, gameState.Cursor.Y)
+}
+
+func Test_moveCursorDown_MovesCursorDown_InCaseOfSuccess(t *testing.T) {
+	// Arrange
+	gameState := NewGame(10, 10)
+	gameState.KeyAt = time.Now().Add(-1 * time.Second)
+	gameState.Cursor = coordinates.NewMatrix(5, 5)
+
+	// Act
+	gameState.moveCursorDown()
+
+	// Assert
+	assert.Equal(t, 5, gameState.Cursor.X)
+	assert.Equal(t, 6, gameState.Cursor.Y)
+}
+
+func Test_moveCursorLeft_MovesCursorLeft_InCaseOfSuccess(t *testing.T) {
+	// Arrange
+	gameState := NewGame(10, 10)
+	gameState.KeyAt = time.Now().Add(-1 * time.Second)
+	gameState.Cursor = coordinates.NewMatrix(5, 5)
+
+	// Act
+	gameState.moveCursorLeft()
+
+	// Assert
+	assert.Equal(t, 4, gameState.Cursor.X)
+	assert.Equal(t, 5, gameState.Cursor.Y)
+}
+
+func Test_moveCursorRight_MovesCursorRight_InCaseOfSuccess(t *testing.T) {
+	// Arrange
+	gameState := NewGame(10, 10)
+	gameState.KeyAt = time.Now().Add(-1 * time.Second)
+	gameState.Cursor = coordinates.NewMatrix(5, 5)
+
+	// Act
+	gameState.moveCursorRight()
+
+	// Assert
+	assert.Equal(t, 6, gameState.Cursor.X)
+	assert.Equal(t, 5, gameState.Cursor.Y)
 }
