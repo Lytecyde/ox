@@ -23,18 +23,7 @@ import (
 	"github.com/hajimehoshi/ebiten"
 )
 
-var boxSize int = data.BoxSize
-
-var regularGameDimensionX int = data.RegularGameDimensionX
-var regularGameDimensionY int = data.RegularGameDimensionY
-
-var borderMargin int = data.BorderMargin
-
-var screenWidth int = boxSize*regularGameDimensionX + borderMargin
-var screenHeight int = boxSize*regularGameDimensionY + borderMargin
-
-var gameState = state.NewGame(regularGameDimensionX,
-	regularGameDimensionY)
+var gameState = state.NewGame(data.RegularGameDimensionX, data.RegularGameDimensionY)
 
 func update(screen *ebiten.Image) error {
 	if ebiten.IsRunningSlowly() {
@@ -44,22 +33,20 @@ func update(screen *ebiten.Image) error {
 	drawMatrix(screen, gameState.Matrix, gray)
 
 	// draw cursor
-	drawBox(screen,
-		coordinates.NewScreen(gameState.Cursor.X*boxSize,
-			gameState.Cursor.Y*boxSize),
-		red)
+	drawBox(screen, coordinates.NewScreen(gameState.Cursor.X*data.BoxSize, gameState.Cursor.Y*data.BoxSize), red)
 
 	drawStates(screen, gameState.Matrix, blue, green)
 
 	//gameloop
-	if !gameState.EndOfGame {
+	if !gameState.Finished {
 		gameState.HandleKeyPress()
 	}
+
 	return nil
 }
 
 func main() {
-	if err := ebiten.Run(update, screenWidth, screenHeight, 1, "TripsTrapsTrull Shapes (Ebiten Demo)"); err != nil {
+	if err := ebiten.Run(update, data.ScreenWidth, data.ScreenHeight, 1, "TripsTrapsTrull Shapes (Ebiten Demo)"); err != nil {
 		log.Fatal(err)
 	}
 }
