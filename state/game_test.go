@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/Lytecyde/ox/coordinates"
+	"github.com/Lytecyde/ox/player"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -183,4 +184,32 @@ func Test_moveCursorRight_MovesCursorRight_InCaseOfSuccess(t *testing.T) {
 	// Assert
 	assert.Equal(t, 6, gameState.Cursor.X)
 	assert.Equal(t, 5, gameState.Cursor.Y)
+}
+
+func Test_setMark_DoesNotMark_InCaseOfAlreadyMarked(t *testing.T) {
+	// Arrange
+	gameState := NewGame(10, 10)
+	gameState.Cursor = coordinates.NewMatrix(5, 5)
+	gameState.Matrix.SetState(*gameState.Cursor, player.Naught)
+	gameState.currentPlayer = player.Cross
+
+	// Act
+	gameState.setMark()
+
+	// Assert
+	assert.Equal(t, player.Naught, gameState.Matrix.State(*gameState.Cursor))
+}
+
+func Test_setMark_Marks_InCaseOfSuccess(t *testing.T) {
+	// Arrange
+	gameState := NewGame(10, 10)
+	gameState.Cursor = coordinates.NewMatrix(5, 5)
+	gameState.Matrix.SetState(*gameState.Cursor, player.None)
+	gameState.currentPlayer = player.Cross
+
+	// Act
+	gameState.setMark()
+
+	// Assert
+	assert.Equal(t, player.Cross, gameState.Matrix.State(*gameState.Cursor))
 }
