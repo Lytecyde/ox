@@ -213,3 +213,29 @@ func Test_setMark_Marks_InCaseOfSuccess(t *testing.T) {
 	// Assert
 	assert.Equal(t, player.Cross, gameState.Matrix.State(*gameState.Cursor))
 }
+
+func Test_isBoxTaken_ReturnsFalse_InCaseOfBoxNotTaken(t *testing.T) {
+	// Arrange
+	gameState := NewGame(10, 10)
+	gameState.Cursor = coordinates.NewMatrix(5, 5)
+	gameState.Matrix.SetState(*gameState.Cursor, player.None)
+
+	// Act
+	taken := gameState.isBoxTaken()
+
+	// Assert
+	assert.False(t, taken)
+}
+
+func Test_isBoxTaken_ReturnsTrue_InCaseOfBoxTanel(t *testing.T) {
+	// Arrange
+	gameState := NewGame(10, 10)
+	gameState.Cursor = coordinates.NewMatrix(5, 5)
+	gameState.Matrix.SetState(*gameState.Cursor, player.Cross)
+
+	// Act
+	taken := gameState.isBoxTaken()
+
+	// Assert
+	assert.True(t, taken)
+}
