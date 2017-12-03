@@ -239,3 +239,67 @@ func Test_isBoxTaken_ReturnsTrue_InCaseOfBoxTanel(t *testing.T) {
 	// Assert
 	assert.True(t, taken)
 }
+
+func Test_isDiagonalDownWin_ReturnsTrue_InCaseOfSuccess(t *testing.T) {
+	// Arrange
+	gameState := NewGame(3, 3)
+	gameState.Matrix.Load([]player.Type{
+		player.Cross, player.None, player.None,
+		player.None, player.Cross, player.None,
+		player.None, player.None, player.Cross,
+	})
+
+	// Act
+	result := gameState.isDiagonalDownWin(player.Cross)
+
+	// Assert
+	assert.True(t, result)
+}
+
+func Test_isDiagonalDownWin_ReturnsFalse_InCaseOfNoFullRow(t *testing.T) {
+	// Arrange
+	gameState := NewGame(3, 3)
+	gameState.Matrix.Load([]player.Type{
+		player.Cross, player.None, player.None,
+		player.None, player.Cross, player.None,
+		player.None, player.None, player.None,
+	})
+
+	// Act
+	result := gameState.isDiagonalDownWin(player.Cross)
+
+	// Assert
+	assert.False(t, result)
+}
+
+func Test_isDiagonalDownWin_ReturnsFalse_InCaseOfWrongRow(t *testing.T) {
+	// Arrange
+	gameState := NewGame(3, 3)
+	gameState.Matrix.Load([]player.Type{
+		player.None, player.Cross, player.None,
+		player.None, player.None, player.Cross,
+		player.None, player.None, player.None,
+	})
+
+	// Act
+	result := gameState.isDiagonalDownWin(player.Cross)
+
+	// Assert
+	assert.False(t, result)
+}
+
+func Test_isDiagonalUpWin_ReturnsTrue_InCaseOfSuccess(t *testing.T) {
+	// Arrange
+	gameState := NewGame(3, 3)
+	gameState.Matrix.Load([]player.Type{
+		player.None, player.None, player.Cross,
+		player.None, player.Cross, player.None,
+		player.Cross, player.None, player.None,
+	})
+
+	// Act
+	result := gameState.isDiagonalUpWin(player.Cross)
+
+	// Assert
+	assert.True(t, result)
+}
