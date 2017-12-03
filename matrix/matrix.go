@@ -25,10 +25,22 @@ func NewMatrix(dimensionx int, dimensiony int) *Matrix {
 	return &m
 }
 
-func (matrix *Matrix) SetState(c coordinates.Matrix, newState player.Type) {
-	matrix.Fields[c.X][c.Y] = newState
+func (m *Matrix) SetState(c coordinates.Matrix, newState player.Type) {
+	m.Fields[c.X][c.Y] = newState
 }
 
-func (matrix *Matrix) State(c coordinates.Matrix) player.Type {
-	return matrix.Fields[c.X][c.Y]
+func (m *Matrix) State(c coordinates.Matrix) player.Type {
+	return m.Fields[c.X][c.Y]
+}
+
+func (m *Matrix) Load(states []player.Type) {
+	row, col := 0, 0
+	for _, state := range states {
+		m.Fields[row][col] = state
+		col++
+		if col >= len(m.Fields[row]) {
+			row++
+			col = 0
+		}
+	}
 }
