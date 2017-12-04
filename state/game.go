@@ -1,6 +1,7 @@
 package state
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/Lytecyde/ox/coordinates"
@@ -109,8 +110,10 @@ func (gameState Game) isBoxTaken() bool {
 }
 
 func (gamesState Game) isWin() bool {
+	name := [...]string{"none", "Crosses", "Naughts"}
 	if gamesState.isWinner(gamesState.currentPlayer) {
 		gamesState.winner = gamesState.currentPlayer
+		fmt.Println(name[gamesState.winner])
 		gamesState.Finished = true
 		return true
 	}
@@ -138,12 +141,12 @@ func (gamesState Game) isDiagonalDownWin(p player.Type) bool {
 }
 
 func (gamesState Game) isDiagonalUpWin(p player.Type) bool {
-	i := 0
 	win := make([]bool, settings.MatrixWidth)
 	y := 0
+	i := 0
 	for x := 0; x < settings.MatrixWidth; x = x + 1 {
 		y = settings.MatrixHeight - 1 - x
-		if x == y && gamesState.Matrix.Fields[x][y] == p {
+		if gamesState.Matrix.Fields[x][y] == p {
 			win[i] = true
 			i++
 		}
