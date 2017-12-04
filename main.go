@@ -39,9 +39,9 @@ func update(screen *ebiten.Image) error {
 
 	draw.States(screen, gameState.Matrix, settings.CrossesColor, settings.NaughtsColor)
 
-	//gameloop
 	if !gameState.Finished {
 		gameState.HandleKeyPress()
+		gameState.SelectWinner()
 	}
 
 	return nil

@@ -103,26 +103,32 @@ func (gameState *Game) setMark() {
 	gameState.Matrix.SetState(*gameState.Cursor, gameState.currentPlayer)
 
 	gameState.currentPlayer = player.Switch(gameState.currentPlayer)
+
 }
 
 func (gameState Game) isBoxTaken() bool {
 	return gameState.Matrix.State(*gameState.Cursor) != player.None
 }
 
-func (gamesState Game) isWin() bool {
+func (gamesState *Game) SelectWinner() {
 	name := [...]string{"none", "Crosses", "Naughts"}
-	if gamesState.isWinner(gamesState.currentPlayer) {
-		gamesState.winner = gamesState.currentPlayer
+	if gamesState.isWinner(player.Cross) {
+		gamesState.winner = player.Cross
 		fmt.Println(name[gamesState.winner])
 		gamesState.Finished = true
-		return true
 	}
-
-	return false
+	if gamesState.isWinner(player.Naught) {
+		gamesState.winner = player.Naught
+		fmt.Println(name[gamesState.winner])
+		gamesState.Finished = true
+	}
 }
 
 func (gameState Game) isWinner(p player.Type) bool {
-	return gameState.isDiagonalDownWin(p) || gameState.isDiagonalUpWin(p) || gameState.isColumnWin(p) || gameState.isRowWin(p)
+	return gameState.isDiagonalDownWin(p) ||
+		gameState.isDiagonalUpWin(p) ||
+		gameState.isColumnWin(p) ||
+		gameState.isRowWin(p)
 }
 
 func (gamesState Game) isDiagonalDownWin(p player.Type) bool {
