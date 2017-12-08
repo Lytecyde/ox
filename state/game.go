@@ -111,16 +111,12 @@ func (gameState Game) isBoxTaken() bool {
 }
 
 func (gamesState *Game) SelectWinner() {
-	name := [...]string{"none", "Crosses", "Naughts"}
-	if gamesState.isWinner(player.Cross) {
-		gamesState.winner = player.Cross
-		fmt.Println(name[gamesState.winner])
-		gamesState.Finished = true
-	}
-	if gamesState.isWinner(player.Naught) {
-		gamesState.winner = player.Naught
-		fmt.Println(name[gamesState.winner])
-		gamesState.Finished = true
+	for p := range []player.Type{player.Cross, player.Naught} {
+		if gamesState.isWinner(p) {
+			gamesState.winner = p
+			fmt.Println(name[gamesState.winner])
+			gamesState.Finished = true
+		}
 	}
 }
 
